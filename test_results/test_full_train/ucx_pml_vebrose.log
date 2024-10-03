@@ -1,0 +1,112 @@
+Warning: Permanently added '[<rocm-ip>]:2222' (ED25519) to the list of known hosts.
+Warning: Permanently added '[<cuda-ip>]:2222' (ED25519) to the list of known hosts.
+/opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:1497: UserWarning: For MPI backend, world_size (2) and rank (1) are ignored since they are assigned by the MPI runtime.
+  warnings.warn(
+[ip-cuda:01727] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-cuda:01727] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-cuda:01727] common_ucx.c:227 readlink(/sys/class/infiniband/ens5/device/driver) failed: No such file or directory
+[ip-cuda:01727] common_ucx.c:337 tcp/ens5: matched transport list but not device list
+[ip-cuda:01727] common_ucx.c:347 support level is transports only
+[ip-cuda:01727] pml_ucx.c:293 mca_pml_ucx_init
+[ip-cuda:01727] pml_ucx.c:124 Pack remote worker address, size 41
+[ip-cuda:01727] pml_ucx.c:124 Pack local worker address, size 41
+[ip-cuda:01727] pml_ucx.c:358 created ucp context 0x6d92220, worker 0x6dced60
+[ip-cuda:01727] pml_ucx_component.c:147 returning priority 19
+/opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:1497: UserWarning: For MPI backend, world_size (2) and rank (0) are ignored since they are assigned by the MPI runtime.
+  warnings.warn(
+[ip-rocm:01301] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-rocm:01301] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm:01301] common_ucx.c:227 readlink(/sys/class/infiniband/ens5/device/driver) failed: No such file or directory
+[ip-rocm:01301] common_ucx.c:337 tcp/ens5: matched transport list but not device list
+[ip-rocm:01301] common_ucx.c:347 support level is transports only
+[ip-rocm:01301] pml_ucx.c:293 mca_pml_ucx_init
+[ip-rocm:01301] pml_ucx.c:124 Pack remote worker address, size 41
+[ip-rocm:01301] pml_ucx.c:124 Pack local worker address, size 41
+[ip-rocm:01301] pml_ucx.c:358 created ucp context 0x91d3af0, worker 0x9210510
+[ip-rocm:01301] pml_ucx_component.c:147 returning priority 19
+[ip-rocm:01301] pml_ucx.c:192 Got proc 0 address, size 41
+[ip-rocm:01301] pml_ucx.c:423 connecting to proc. 0
+[ip-cuda:01727] pml_ucx.c:192 Got proc 1 address, size 41
+[ip-cuda:01727] pml_ucx.c:423 connecting to proc. 1
+[ip-rocm:01301] pml_ucx.c:192 Got proc 1 address, size 41
+[ip-rocm:01301] pml_ucx.c:423 connecting to proc. 1
+[ip-cuda:01727] pml_ucx.c:192 Got proc 0 address, size 41
+[ip-cuda:01727] pml_ucx.c:423 connecting to proc. 0
+[ip-cuda:1727 :0:1733]  ucp_worker.c:3027 Assertion `ucs_async_check_owner_thread(&(worker)->async)' failed
+==== backtrace (tid:   1733) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7afe56de8aac]
+ 1  /usr/lib/libucs.so.0(ucs_fatal_error_message+0xb8) [0x7afe56de58d8]
+ 2  /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d) [0x7afe56de59fd]
+ 3  /usr/lib/libucp.so.0(ucp_worker_progress+0x218) [0x7afe56eabd78]
+ 4  /usr/lib/libucc.so.1(ucc_context_progress+0x7f) [0x7afe572c3d7f]
+ 5  /usr/lib/libmpi.so.40(+0x1341cb) [0x7afe5dffc1cb]
+ 6  /usr/lib/libopen-pal.so.80(opal_progress+0x34) [0x7afe56cc0744]
+ 7  /usr/lib/libmpi.so.40(ompi_request_default_wait+0x143) [0x7afe5df5e613]
+ 8  /usr/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0xe5) [0x7afe5dfd1485]
+ 9  /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_recursivedoubling+0x2ae) [0x7afe5dfd27ae]
+10  /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_ring+0x889) [0x7afe5dfd5309]
+11  /usr/lib/libmpi.so.40(ompi_coll_tuned_allreduce_intra_dec_fixed+0x49) [0x7afe5e0233b9]
+12  /usr/lib/libmpi.so.40(mca_coll_han_comm_create_new+0x293) [0x7afe5e059163]
+13  /usr/lib/libmpi.so.40(mca_coll_han_allgather_intra+0x55) [0x7afe5e050925]
+14  /usr/lib/libmpi.so.40(mca_coll_ucc_allgather+0xc1) [0x7afe5dfffef1]
+15  /usr/lib/libmpi.so.40(PMPI_Allgather+0x11e) [0x7afe5df73e6e]
+16  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x6136983) [0x7afe4ec0c983]
+17  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112) [0x7afe4ec0f8e2]
+18  /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb) [0x7afe3d2f2aeb]
+19  /usr/lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7afe5eb7cac3]
+20  /usr/lib/x86_64-linux-gnu/libc.so.6(+0x126850) [0x7afe5ec0e850]
+=================================
+[ip-cuda:01727] *** Process received signal ***
+[ip-cuda:01727] Signal: Aborted (6)
+[ip-cuda:01727] Signal code:  (-6)
+[ip-cuda:01727] [ 0] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7afe5eb2a520]
+[ip-cuda:01727] [ 1] /usr/lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7afe5eb7e9fc]
+[ip-cuda:01727] [ 2] /usr/lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7afe5eb2a476]
+[ip-cuda:01727] [ 3] /usr/lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7afe5eb107f3]
+[ip-cuda:01727] [ 4] /usr/lib/libucs.so.0(+0x398dd)[0x7afe56de58dd]
+[ip-cuda:01727] [ 5] /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d)[0x7afe56de59fd]
+[ip-cuda:01727] [ 6] /usr/lib/libucp.so.0(ucp_worker_progress+0x218)[0x7afe56eabd78]
+[ip-cuda:01727] [ 7] /usr/lib/libucc.so.1(ucc_context_progress+0x7f)[0x7afe572c3d7f]
+[ip-cuda:01727] [ 8] /usr/lib/libmpi.so.40(+0x1341cb)[0x7afe5dffc1cb]
+[ip-cuda:01727] [ 9] /usr/lib/libopen-pal.so.80(opal_progress+0x34)[0x7afe56cc0744]
+[ip-cuda:01727] [10] /usr/lib/libmpi.so.40(ompi_request_default_wait+0x143)[0x7afe5df5e613]
+[ip-cuda:01727] [11] /usr/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0xe5)[0x7afe5dfd1485]
+[ip-cuda:01727] [12] /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_recursivedoubling+0x2ae)[0x7afe5dfd27ae]
+[ip-cuda:01727] [13] /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_ring+0x889)[0x7afe5dfd5309]
+[ip-cuda:01727] [14] /usr/lib/libmpi.so.40(ompi_coll_tuned_allreduce_intra_dec_fixed+0x49)[0x7afe5e0233b9]
+[ip-cuda:01727] [15] /usr/lib/libmpi.so.40(mca_coll_han_comm_create_new+0x293)[0x7afe5e059163]
+[ip-cuda:01727] [16] /usr/lib/libmpi.so.40(mca_coll_han_allgather_intra+0x55)[0x7afe5e050925]
+[ip-cuda:01727] [17] /usr/lib/libmpi.so.40(mca_coll_ucc_allgather+0xc1)[0x7afe5dfffef1]
+[ip-cuda:01727] [18] /usr/lib/libmpi.so.40(PMPI_Allgather+0x11e)[0x7afe5df73e6e]
+[ip-cuda:01727] [19] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x6136983)[0x7afe4ec0c983]
+[ip-cuda:01727] [20] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112)[0x7afe4ec0f8e2]
+[ip-cuda:01727] [21] /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb)[0x7afe3d2f2aeb]
+[ip-cuda:01727] [22] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x94ac3)[0x7afe5eb7cac3]
+[ip-cuda:01727] [23] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x126850)[0x7afe5ec0e850]
+[ip-cuda:01727] *** End of error message ***
+[ip-rocm:1301 :0:1308] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7e68da000400)
+==== backtrace (tid:   1308) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7e6aac838aac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x7e6aac838c8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x7e6aac838fc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x7e6ab42c1520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0840) [0x7e6ab441f840]
+ 5  /usr/lib/libuct.so.0(uct_tcp_ep_am_short+0xf3) [0x7e6aac3dbcd3]
+ 6  /usr/lib/libucp.so.0(+0x10cf16) [0x7e6aac995f16]
+ 7  /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x1780) [0x7e6aac9a6180]
+ 8  /usr/lib/libmpi.so.40(mca_pml_ucx_send+0x147) [0x7e6ab38dfe07]
+ 9  /usr/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0xc9) [0x7e6ab376c469]
+10  /usr/lib/libmpi.so.40(ompi_coll_base_allgather_intra_two_procs+0x88) [0x7e6ab376aee8]
+11  /usr/lib/libmpi.so.40(ompi_coll_tuned_allgather_intra_dec_fixed+0x4e) [0x7e6ab37bdc7e]
+12  /usr/lib/libmpi.so.40(mca_coll_han_allgather_intra+0xea) [0x7e6ab37ea06a]
+13  /usr/lib/libmpi.so.40(mca_coll_ucc_allgather+0xc1) [0x7e6ab379aef1]
+14  /usr/lib/libmpi.so.40(PMPI_Allgather+0x11e) [0x7e6ab370ee6e]
+15  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f03943) [0x7e6aa6809943]
+16  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112) [0x7e6aa680c8a2]
+17  /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb) [0x7e6a67ce9aeb]
+18  /lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7e6ab4313ac3]
+19  /lib/x86_64-linux-gnu/libc.so.6(+0x126850) [0x7e6ab43a5850]
+=================================
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------

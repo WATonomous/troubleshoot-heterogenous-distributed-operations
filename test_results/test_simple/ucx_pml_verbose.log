@@ -1,0 +1,78 @@
+Warning: Permanently added '[<rocm-ip>]:2222' (ED25519) to the list of known hosts.
+Warning: Permanently added '[<cuda-ip>]:2222' (ED25519) to the list of known hosts.
+/opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:1497: UserWarning: For MPI backend, world_size (2) and rank (1) are ignored since they are assigned by the MPI runtime.
+  warnings.warn(
+/opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:1497: UserWarning: For MPI backend, world_size (2) and rank (0) are ignored since they are assigned by the MPI runtime.
+  warnings.warn(
+[ip-cuda:01653] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-cuda:01653] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-cuda:01653] common_ucx.c:227 readlink(/sys/class/infiniband/ens5/device/driver) failed: No such file or directory
+[ip-cuda:01653] common_ucx.c:337 tcp/ens5: matched transport list but not device list
+[ip-cuda:01653] common_ucx.c:227 readlink(/sys/class/infiniband/lo/device/driver) failed: No such file or directory
+[ip-cuda:01653] common_ucx.c:337 tcp/lo: matched transport list but not device list
+[ip-cuda:01653] common_ucx.c:347 support level is transports only
+[ip-cuda:01653] pml_ucx.c:293 mca_pml_ucx_init
+[ip-cuda:01653] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-cuda:01653] pml_ucx.c:124 Pack local worker address, size 82
+[ip-cuda:01653] pml_ucx.c:358 created ucp context 0x68cfd00, worker 0x694c8c0
+[ip-cuda:01653] pml_ucx_component.c:147 returning priority 19
+[ip-rocm:01219] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-rocm:01219] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm:01219] common_ucx.c:227 readlink(/sys/class/infiniband/ens5/device/driver) failed: No such file or directory
+[ip-rocm:01219] common_ucx.c:337 tcp/ens5: matched transport list but not device list
+[ip-rocm:01219] common_ucx.c:227 readlink(/sys/class/infiniband/lo/device/driver) failed: No such file or directory
+[ip-rocm:01219] common_ucx.c:337 tcp/lo: matched transport list but not device list
+[ip-rocm:01219] common_ucx.c:347 support level is transports only
+[ip-rocm:01219] pml_ucx.c:293 mca_pml_ucx_init
+[ip-rocm:01219] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-rocm:01219] pml_ucx.c:124 Pack local worker address, size 82
+[ip-rocm:01219] pml_ucx.c:358 created ucp context 0x8a05ea0, worker 0x8a41f20
+[ip-rocm:01219] pml_ucx_component.c:147 returning priority 19
+[ip-rocm:01219] pml_ucx.c:192 Got proc 0 address, size 82
+[ip-rocm:01219] pml_ucx.c:423 connecting to proc. 0
+[ip-cuda:01653] pml_ucx.c:192 Got proc 1 address, size 82
+[ip-cuda:01653] pml_ucx.c:423 connecting to proc. 1
+[ip-rocm:01219] pml_ucx.c:192 Got proc 1 address, size 82
+[ip-rocm:01219] pml_ucx.c:423 connecting to proc. 1
+[ip-cuda:01653] pml_ucx.c:192 Got proc 0 address, size 82
+[ip-cuda:01653] pml_ucx.c:423 connecting to proc. 0
+[ip-rocm:1219 :0:1219] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x746396e00000)
+==== backtrace (tid:   1219) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x746560572aac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x746560572c8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x746560572fc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x746567ffb520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0815) [0x746568159815]
+ 5  /usr/lib/libuct.so.0(uct_tcp_ep_am_short+0xf3) [0x746560115cd3]
+ 6  /usr/lib/libucp.so.0(+0x10cf16) [0x7465606cff16]
+ 7  /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x1780) [0x7465606e0180]
+ 8  /usr/lib/libmpi.so.40(mca_pml_ucx_isend+0xa8) [0x74656761b8d8]
+ 9  /usr/lib/libmpi.so.40(MPI_Isend+0x13c) [0x74656746a59c]
+10  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI4sendERSt6vectorIN2at6TensorESaIS3_EEii+0x1b3) [0x74655a541d03]
+11  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5ea54fd) [0x74655a4e54fd]
+12  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5eb638a) [0x74655a4f638a]
+13  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x546d870) [0x746559aad870]
+14  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x546bce1) [0x746559aabce1]
+15  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x15dec9c) [0x746555c1ec9c]
+16  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5ebe80f) [0x74655a4fe80f]
+17  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5ec4691) [0x74655a504691]
+18  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_python.so(+0xeb79dc) [0x74655fb329dc]
+19  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_python.so(+0x4fba9a) [0x74655f176a9a]
+20  /opt/conda/envs/py_3.12/bin/python() [0x549c24]
+21  /opt/conda/envs/py_3.12/bin/python(_PyObject_MakeTpCall+0x2fb) [0x51ae3b]
+22  /opt/conda/envs/py_3.12/bin/python(_PyEval_EvalFrameDefault+0x6d1) [0x525731]
+23  /opt/conda/envs/py_3.12/bin/python(PyEval_EvalCode+0xae) [0x5e47ae]
+24  /opt/conda/envs/py_3.12/bin/python() [0x60abd7]
+25  /opt/conda/envs/py_3.12/bin/python() [0x606207]
+26  /opt/conda/envs/py_3.12/bin/python() [0x61e242]
+27  /opt/conda/envs/py_3.12/bin/python(_PyRun_SimpleFileObject+0x1b0) [0x61db80]
+28  /opt/conda/envs/py_3.12/bin/python(_PyRun_AnyFileObject+0x43) [0x61d973]
+29  /opt/conda/envs/py_3.12/bin/python(Py_RunMain+0x303) [0x6168f3]
+30  /opt/conda/envs/py_3.12/bin/python(Py_BytesMain+0x39) [0x5cbae9]
+31  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x746567fe2d90]
+32  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x746567fe2e40]
+33  /opt/conda/envs/py_3.12/bin/python() [0x5cb919]
+=================================
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------
