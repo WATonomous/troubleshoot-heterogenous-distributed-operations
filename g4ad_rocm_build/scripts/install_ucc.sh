@@ -2,7 +2,7 @@
 
 set -ex
 
-git clone --recursive https://github.com/ROCm/ucc.git
+git clone --recursive https://github.com/openucx/ucc.git
 pushd ucc
 git checkout ${UCC_COMMIT}
 git submodule update --init --recursive

@@ -153,13 +153,13 @@ RUN ["/bin/bash", "-c", "./install_aotriton.sh /opt/rocm && rm -rf install_aotri
 ENV AOTRITON_INSTALLED_PREFIX /opt/rocm/aotriton
 
 # Install UCX
-ENV UCX_CHECKOUT_POINT="4234ca0cdba617bb28842d3fb5d0dd64ced0c1bb"
+ENV UCX_CHECKOUT_POINT="875125b9a146c498294f0f999abd995256d1e241"
 COPY ./scripts/install_ucx.sh install_ucx.sh
 RUN bash ./install_ucx.sh
 RUN rm install_ucx.sh
 
 # Install UCC
-ENV UCC_COMMIT="2359644bdb008cf47e9ec944f1d17a23681a6aec"
+ENV UCC_COMMIT="4c72697c3631749df00de2e5d16a0b4e88818d41"
 COPY ./scripts/install_ucc.sh install_ucc.sh
 RUN bash ./install_ucc.sh
 RUN rm install_ucc.sh
