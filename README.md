@@ -76,8 +76,12 @@ I decided to run MPI worker containers with passwordless SSH. To configure this,
 
 I began testing with the [full PyTorch distributed example](./scripts/test_full_train.py), using only the TCP transport layer:
 
-```
-mpirun -np 2 --allow-run-as-root --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 -x UCX_NET_DEVICES=ens5 --mca pml ucx --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0 -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp /opt/conda/envs/py_3.12/bin/python /test_full_train.py 10 10
+```bash
+mpirun -np 2 --allow-run-as-root \ 
+    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
+    -x UCX_NET_DEVICES=ens5 --mca pml ucx -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp \ 
+    --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 \
+    -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0  /opt/conda/envs/py_3.12/bin/python /test_full_train.py 10 10
 ```
 However, the test failed with the following error: 
 ```
@@ -86,8 +90,12 @@ Segmentation fault: invalid permissions for mapped object at address
 
 The same happened when I tried to run a [simple test with just `send` and `recv` functions](./scripts/test_simple.py):
 
-```
-mpirun -np 2 --allow-run-as-root --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 -x UCX_NET_DEVICES=ens5 --mca pml ucx --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0 -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp /opt/conda/envs/py_3.12/bin/python /test_simple.py
+```bash
+mpirun -np 2 --allow-run-as-root \ 
+    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
+    -x UCX_NET_DEVICES=ens5 --mca pml ucx -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp \ 
+    --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 \
+    -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0  /opt/conda/envs/py_3.12/bin/python /test_simple.py
 ```
 This resulted in the same segmentation fault.
 
@@ -99,6 +107,9 @@ In the [test_results](./test_results/) directory, I appended log files from diff
 
 The only successful result occurred in a simple scenario when running mpirun without UCX configuration:
 
-```
-mpirun -np 2 --allow-run-as-root --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include ens5 /opt/conda/envs/py_3.12/bin/python /test_simple.py
+```bash
+mpirun -np 2 --allow-run-as-root \
+    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
+    --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include ens5 \
+    /opt/conda/envs/py_3.12/bin/python /test_simple.py
 ```
