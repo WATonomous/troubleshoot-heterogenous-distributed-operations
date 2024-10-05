@@ -11,7 +11,7 @@ WORLD_RANK = int(os.environ["OMPI_COMM_WORLD_RANK"])
 def run(backend):
     tensor = torch.zeros(1)
 
-    # Need to put tensor on a GPU device for nccl backend
+    # Put tensor on a GPU device
     device = torch.device("cuda:{}".format(LOCAL_RANK))
     tensor = tensor.to(device)
 
