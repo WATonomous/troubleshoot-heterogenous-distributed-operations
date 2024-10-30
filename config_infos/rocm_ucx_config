@@ -1,0 +1,690 @@
+### VERSION ###
+# Library version: 1.18.0
+# Library path: /usr/lib/libucs.so.0
+# API headers version: 1.18.0
+# Git branch '', revision 875125b
+# Configured with: --prefix=/usr --enable-mt --with-rocm=/opt/rocm --enable-profiling --enable-stats
+
+### DEVICES AND TRANSPORT ###
+# Memory domain: self
+#     Component: self
+#             register: unlimited, cost: 0 nsec
+#           remote key: 0 bytes
+#           rkey_ptr is supported
+#         memory types: host (access,reg_nonblock,reg,cache)
+#
+#      Transport: self
+#         Device: memory
+#           Type: loopback
+#  System device: <unknown>
+#
+#      capabilities:
+#            bandwidth: 0.00/ppn + 19360.00 MB/sec
+#              latency: 0 nsec
+#             overhead: 10 nsec
+#            put_short: <= 4294967295
+#            put_bcopy: unlimited
+#            get_bcopy: unlimited
+#             am_short: <= 8K
+#             am_bcopy: <= 8K
+#               domain: cpu
+#           atomic_add: 32, 64 bit
+#           atomic_and: 32, 64 bit
+#            atomic_or: 32, 64 bit
+#           atomic_xor: 32, 64 bit
+#          atomic_fadd: 32, 64 bit
+#          atomic_fand: 32, 64 bit
+#           atomic_for: 32, 64 bit
+#          atomic_fxor: 32, 64 bit
+#          atomic_swap: 32, 64 bit
+#         atomic_cswap: 32, 64 bit
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 0 bytes
+#        iface address: 8 bytes
+#       error handling: ep_check
+#
+#
+# Memory domain: tcp
+#     Component: tcp
+#             register: unlimited, cost: 0 nsec
+#           remote key: 0 bytes
+#         memory types: host (access,reg_nonblock,reg,cache)
+#
+#      Transport: tcp
+#         Device: ens5
+#           Type: network
+#  System device: ens5 (0)
+#
+#      capabilities:
+#            bandwidth: 11.82/ppn + 0.00 MB/sec
+#              latency: 10960 nsec
+#             overhead: 50000 nsec
+#            put_zcopy: <= 18446744073709551590, up to 6 iov
+#  put_opt_zcopy_align: <= 1
+#        put_align_mtu: <= 0
+#             am_short: <= 8K
+#             am_bcopy: <= 8K
+#             am_zcopy: <= 64K, up to 6 iov
+#   am_opt_zcopy_align: <= 1
+#         am_align_mtu: <= 0
+#            am header: <= 8037
+#           connection: to ep, to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: 256
+#       device address: 6 bytes
+#        iface address: 2 bytes
+#           ep address: 10 bytes
+#       error handling: peer failure, ep_check, keepalive
+#
+#      Transport: tcp
+#         Device: lo
+#           Type: network
+#  System device: <unknown>
+#
+#      capabilities:
+#            bandwidth: 11.91/ppn + 0.00 MB/sec
+#              latency: 10960 nsec
+#             overhead: 50000 nsec
+#            put_zcopy: <= 18446744073709551590, up to 6 iov
+#  put_opt_zcopy_align: <= 1
+#        put_align_mtu: <= 0
+#             am_short: <= 8K
+#             am_bcopy: <= 8K
+#             am_zcopy: <= 64K, up to 6 iov
+#   am_opt_zcopy_align: <= 1
+#         am_align_mtu: <= 0
+#            am header: <= 8037
+#           connection: to ep, to iface
+#      device priority: 1
+#     device num paths: 1
+#              max eps: 256
+#       device address: 18 bytes
+#        iface address: 2 bytes
+#           ep address: 10 bytes
+#       error handling: peer failure, ep_check, keepalive
+#
+#
+# Connection manager: tcp
+#      max_conn_priv: 2064 bytes
+#
+# Memory domain: sysv
+#     Component: sysv
+#             allocate: unlimited
+#           remote key: 12 bytes
+#           rkey_ptr is supported
+#         memory types: host (access,alloc,cache)
+#
+#      Transport: sysv
+#         Device: memory
+#           Type: intra-node
+#  System device: <unknown>
+#
+#      capabilities:
+#            bandwidth: 0.00/ppn + 15360.00 MB/sec
+#              latency: 80 nsec
+#             overhead: 10 nsec
+#            put_short: <= 4294967295
+#            put_bcopy: unlimited
+#            get_bcopy: unlimited
+#             am_short: <= 100
+#             am_bcopy: <= 8256
+#               domain: cpu
+#           atomic_add: 32, 64 bit
+#           atomic_and: 32, 64 bit
+#            atomic_or: 32, 64 bit
+#           atomic_xor: 32, 64 bit
+#          atomic_fadd: 32, 64 bit
+#          atomic_fand: 32, 64 bit
+#           atomic_for: 32, 64 bit
+#          atomic_fxor: 32, 64 bit
+#          atomic_swap: 32, 64 bit
+#         atomic_cswap: 32, 64 bit
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 8 bytes
+#        iface address: 8 bytes
+#       error handling: ep_check
+#
+#
+# Memory domain: posix
+#     Component: posix
+#             allocate: <= 7866300K
+#           remote key: 32 bytes
+#           rkey_ptr is supported
+#         memory types: host (access,alloc,cache)
+#
+#      Transport: posix
+#         Device: memory
+#           Type: intra-node
+#  System device: <unknown>
+#
+#      capabilities:
+#            bandwidth: 0.00/ppn + 15360.00 MB/sec
+#              latency: 80 nsec
+#             overhead: 10 nsec
+#            put_short: <= 4294967295
+#            put_bcopy: unlimited
+#            get_bcopy: unlimited
+#             am_short: <= 100
+#             am_bcopy: <= 8256
+#               domain: cpu
+#           atomic_add: 32, 64 bit
+#           atomic_and: 32, 64 bit
+#            atomic_or: 32, 64 bit
+#           atomic_xor: 32, 64 bit
+#          atomic_fadd: 32, 64 bit
+#          atomic_fand: 32, 64 bit
+#           atomic_for: 32, 64 bit
+#          atomic_fxor: 32, 64 bit
+#          atomic_swap: 32, 64 bit
+#         atomic_cswap: 32, 64 bit
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 8 bytes
+#        iface address: 16 bytes
+#       error handling: ep_check
+#
+#
+# Memory domain: rocm_cpy
+#     Component: rocm_cpy
+#             allocate: unlimited
+#             register: unlimited, cost: 0 nsec
+#           remote key: 16 bytes
+#         memory types: host (reg,cache), rocm (access,alloc,reg,cache,detect)
+#
+#      Transport: rocm_copy
+#         Device: rocm_cpy
+#           Type: accelerator
+#  System device: GPU0 (1)
+#
+#      capabilities:
+#            bandwidth: 0.00/ppn + 6911.00 MB/sec
+#              latency: 100 nsec
+#             overhead: 0 nsec
+#            put_short: <= 4294967295
+#            put_zcopy: unlimited, up to 1 iov
+#  put_opt_zcopy_align: <= 1
+#        put_align_mtu: <= 1
+#            get_short: <= 4294967295
+#            get_zcopy: unlimited, up to 1 iov
+#  get_opt_zcopy_align: <= 1
+#        get_align_mtu: <= 1
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 0 bytes
+#        iface address: 8 bytes
+#       error handling: none
+#
+#
+# Memory domain: rocm_ipc
+#     Component: rocm_ipc
+#             register: unlimited, cost: 9 nsec
+#           remote key: 56 bytes
+#         memory types: rocm (access,reg,cache)
+#
+#      Transport: rocm_ipc
+#         Device: rocm_ipc
+#           Type: accelerator
+#  System device: GPU0 (1)
+#
+#      capabilities:
+#            bandwidth: 204800.00/ppn + 0.00 MB/sec
+#              latency: 100 nsec
+#             overhead: 0 nsec
+#            put_zcopy: 128..inf, up to 1 iov
+#  put_opt_zcopy_align: <= 4
+#        put_align_mtu: <= 4
+#            get_zcopy: 128..inf, up to 1 iov
+#  get_opt_zcopy_align: <= 4
+#        get_align_mtu: <= 4
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 8 bytes
+#        iface address: 4 bytes
+#       error handling: none
+#
+#
+# Memory domain: cma
+#     Component: cma
+#             register: unlimited, cost: 9 nsec
+#         memory types: host (access,reg_nonblock,reg,cache)
+#
+#      Transport: cma
+#         Device: memory
+#           Type: intra-node
+#  System device: <unknown>
+#
+#      capabilities:
+#            bandwidth: 0.00/ppn + 11145.00 MB/sec
+#              latency: 80 nsec
+#             overhead: 2000 nsec
+#            put_zcopy: unlimited, up to 16 iov
+#  put_opt_zcopy_align: <= 1
+#        put_align_mtu: <= 1
+#            get_zcopy: unlimited, up to 16 iov
+#  get_opt_zcopy_align: <= 1
+#        get_align_mtu: <= 1
+#           connection: to iface
+#      device priority: 0
+#     device num paths: 1
+#              max eps: inf
+#       device address: 8 bytes
+#        iface address: 16 bytes
+#       error handling: peer failure, ep_check
+#
+
+### BUILD ###
+#define UCX_CONFIG_H
+#define ENABLE_ASSERT             1
+#define ENABLE_BUILTIN_MEMCPY     1
+#define ENABLE_DEBUG_DATA         0
+#define ENABLE_MT                 1
+#define ENABLE_PARAMS_CHECK       1
+#define ENABLE_STATS              1
+#define HAVE_ALLOCA               1
+#define HAVE_ALLOCA_H             1
+#define HAVE_ATTRIBUTE_NOOPTIMIZE 1
+#define HAVE_CLEARENV             1
+#define HAVE_CPU_SET_T            1
+#define HAVE_DECL_ASPRINTF        1
+#define HAVE_DECL_BASENAME        1
+#define HAVE_DECL_CPU_ISSET       1
+#define HAVE_DECL_CPU_ZERO        1
+#define HAVE_DECL_CU_MEM_HANDLE_TYPE_FABRIC 0
+#define HAVE_DECL_ETHTOOL_CMD_SPEED 1
+#define HAVE_DECL_FMEMOPEN        1
+#define HAVE_DECL_FUSE_MOUNT      0
+#define HAVE_DECL_FUSE_OPEN_CHANNEL 0
+#define HAVE_DECL_FUSE_UNMOUNT    0
+#define HAVE_DECL_F_SETOWN_EX     1
+#define HAVE_DECL_GETAUXVAL       1
+#define HAVE_DECL_IBV_CREATE_SRQ  0
+#define HAVE_DECL_IBV_EVENT_TYPE_STR 0
+#define HAVE_DECL_IBV_GET_ASYNC_EVENT 0
+#define HAVE_DECL_IBV_GET_DEVICE_NAME 0
+#define HAVE_DECL_IBV_QUERY_GID   0
+#define HAVE_DECL_IBV_WC_STATUS_STR 0
+#define HAVE_DECL_INOTIFY_ADD_WATCH 1
+#define HAVE_DECL_INOTIFY_INIT    1
+#define HAVE_DECL_IN_ATTRIB       1
+#define HAVE_DECL_IPPROTO_TCP     1
+#define HAVE_DECL_MADV_FREE       1
+#define HAVE_DECL_MADV_REMOVE     1
+#define HAVE_DECL_POSIX_MADV_DONTNEED 1
+#define HAVE_DECL_PR_SET_PTRACER  1
+#define HAVE_DECL_SOL_SOCKET      1
+#define HAVE_DECL_SO_KEEPALIVE    1
+#define HAVE_DECL_SPEED_UNKNOWN   1
+#define HAVE_DECL_STRERROR_R      1
+#define HAVE_DECL_SYS_BRK         1
+#define HAVE_DECL_SYS_IPC         0
+#define HAVE_DECL_SYS_MADVISE     1
+#define HAVE_DECL_SYS_MMAP        1
+#define HAVE_DECL_SYS_MREMAP      1
+#define HAVE_DECL_SYS_MUNMAP      1
+#define HAVE_DECL_SYS_SHMAT       1
+#define HAVE_DECL_SYS_SHMDT       1
+#define HAVE_DECL_TCP_KEEPCNT     1
+#define HAVE_DECL_TCP_KEEPIDLE    1
+#define HAVE_DECL_TCP_KEEPINTVL   1
+#define HAVE_DECL___PPC_GET_TIMEBASE 0
+#define HAVE_DECL___PPC_GET_TIMEBASE_FREQ 0
+#define HAVE_DLFCN_H              1
+#define HAVE_HIP                  1
+#define HAVE_HIP_RUNTIME_H        1
+#define HAVE_HSA_AMD_PORTABLE_EXPORT_DMABUF 1
+#define HAVE_HSA_EXT_AMD_H        1
+#define HAVE_HSA_H                1
+#define HAVE_HW_TIMER             1
+#define HAVE_IN6_ADDR_S6_ADDR32   1
+#define HAVE_INOTIFY              1
+#define HAVE_INTTYPES_H           1
+#define HAVE_IP_IP_DST            1
+#define HAVE_LIBGEN_H             1
+#define HAVE_LIBRT                1
+#define HAVE_LINUX_FUTEX_H        1
+#define HAVE_LINUX_IP_H           1
+#define HAVE_LINUX_MMAN_H         1
+#define HAVE_MALLOC_H             1
+#define HAVE_MALLOC_TRIM          1
+#define HAVE_MEMALIGN             1
+#define HAVE_MREMAP               1
+#define HAVE_NETINET_IP_H         1
+#define HAVE_NET_ETHERNET_H       1
+#define HAVE_POSIX_MEMALIGN       1
+#define HAVE_PROFILING            1
+#define HAVE_ROCM                 1
+#define HAVE_SCHED_GETAFFINITY    1
+#define HAVE_SCHED_SETAFFINITY    1
+#define HAVE_SIGACTION_SA_RESTORER 1
+#define HAVE_SIGEVENT_SIGEV_UN_TID 1
+#define HAVE_SIGHANDLER_T         1
+#define HAVE_STDINT_H             1
+#define HAVE_STDIO_H              1
+#define HAVE_STDLIB_H             1
+#define HAVE_STRERROR_R           1
+#define HAVE_STRINGS_H            1
+#define HAVE_STRING_H             1
+#define HAVE_STRUCT_DL_PHDR_INFO  1
+#define HAVE_SYS_EPOLL_H          1
+#define HAVE_SYS_EVENTFD_H        1
+#define HAVE_SYS_STAT_H           1
+#define HAVE_SYS_TYPES_H          1
+#define HAVE_SYS_UIO_H            1
+#define HAVE_UCM_PTMALLOC286      1
+#define HAVE_UNISTD_H             1
+#define HAVE_WCHAR_H              1
+#define HAVE___CLEAR_CACHE        1
+#define HAVE___CURBRK             1
+#define HAVE___SIGHANDLER_T       1
+#define LT_OBJDIR                 ".libs/"
+#define NVALGRIND                 1
+#define PACKAGE                   "ucx"
+#define PACKAGE_BUGREPORT         ""
+#define PACKAGE_NAME              "ucx"
+#define PACKAGE_STRING            "ucx 1.18"
+#define PACKAGE_TARNAME           "ucx"
+#define PACKAGE_URL               ""
+#define PACKAGE_VERSION           "1.18"
+#define STDC_HEADERS              1
+#define STRERROR_R_CHAR_P         1
+#define UCM_BISTRO_HOOKS          1
+#define UCS_MAX_LOG_LEVEL         UCS_LOG_LEVEL_TRACE_POLL
+#define UCT_TCP_EP_KEEPALIVE      1
+#define UCT_UD_EP_DEBUG_HOOKS     0
+#define UCX_CONFIGURE_FLAGS       "--prefix=/usr --enable-mt --with-rocm=/opt/rocm --enable-profiling --enable-stats"
+#define UCX_MODULE_SUBDIR         "ucx"
+#define VERSION                   "1.18"
+#define restrict                  __restrict__
+#define test_MODULES              ":module"
+#define ucg_MODULES               ":builtin"
+#define ucm_MODULES               ":rocm"
+#define ucs_MODULES               ""
+#define uct_MODULES               ":rocm:cma"
+#define uct_cuda_MODULES          ""
+#define uct_ib_MODULES            ""
+#define uct_rocm_MODULES          ""
+#define ucx_perftest_MODULES      ":rocm"
+
+### CONFIG ###
+UCX_LOG_LEVEL=WARN
+UCX_LOG_FILE_FILTER=*
+UCX_LOG_BUFFER=1K
+UCX_LOG_DATA_SIZE=0
+UCX_LOG_PRINT_ENABLE=n
+UCX_HANDLE_ERRORS=bt
+UCX_ERROR_MAIL_TO=
+UCX_ERROR_MAIL_FOOTER=
+UCX_GDB_COMMAND=gdb -quiet
+UCX_DEBUG_SIGNO=HUP
+UCX_LOG_LEVEL_TRIGGER=FATAL
+UCX_WARN_UNUSED_ENV_VARS=y
+UCX_MEMTYPE_CACHE=try
+UCX_ASYNC_MAX_EVENTS (deprecated)
+UCX_ASYNC_SIGNO=ALRM
+UCX_MEMTRACK_LIMIT=inf
+UCX_RCACHE_CHECK_PFN=0
+UCX_MODULE_DIR=/usr/lib/ucx
+UCX_MODULE_LOG_LEVEL=TRACE
+UCX_MODULES=all
+UCX_TOPO_PRIO=sysfs,default
+UCX_DISTANCE_LAT=phb:0.30us,node:0.30us,sys:0.50us
+UCX_DISTANCE_BW=phb:auto,node:auto,sys:5100.00MBps
+UCX_LOG_FILE=
+UCX_LOG_FILE_SIZE=inf
+UCX_LOG_FILE_ROTATE=0
+UCX_ERROR_SIGNALS=ILL,SEGV,BUS,FPE
+UCX_VFS_ENABLE=y
+UCX_VFS_SOCK_PATH=/run/user/%i/ucx/vfs.sock
+UCX_VFS_THREAD_AFFINITY=n
+UCX_STATS_DEST=
+UCX_STATS_TRIGGER=exit
+UCX_STATS_FILTER=*
+UCX_STATS_FORMAT=full
+UCX_MEMTRACK_DEST=
+UCX_PROFILE_MODE=
+UCX_PROFILE_FILE=ucx_%h_%p.prof
+UCX_PROFILE_LOG_SIZE=4M
+UCX_RCACHE_STAT_MIN=4K
+UCX_RCACHE_STAT_MAX=1M
+UCX_BUILTIN_MEMCPY_MIN=auto
+UCX_BUILTIN_MEMCPY_MAX=auto
+UCX_NT_BUFFER_TRANSFER_MIN=auto
+UCX_MEM_LOG_LEVEL=WARN
+UCX_MEM_ALLOC_ALIGN=16
+UCX_MEM_EVENTS=y
+UCX_MEM_MMAP_HOOK_MODE=bistro
+UCX_MEM_MALLOC_HOOKS=y
+UCX_MEM_MALLOC_RELOC=y
+UCX_MEM_CUDA_HOOK_MODE=bistro
+UCX_MEM_CUDA_RELOC (deprecated)
+UCX_MEM_DYNAMIC_MMAP_THRESH=y
+UCX_MEM_DLOPEN_PROCESS_RPATH=y
+UCX_MEM_MODULE_UNLOAD_PREVENT_MODE=lazy
+UCX_MEM_BISTRO_FORCE_FAR_JUMP=n
+UCX_SELF_NUM_DEVICES=1
+UCX_SELF_MAX_SHORT (deprecated)
+UCX_SELF_MAX_BCOPY (deprecated)
+UCX_SELF_ALLOC=huge,thp,md,mmap,heap
+UCX_SELF_FAILURE=DIAG
+UCX_SELF_MAX_NUM_EPS=inf
+UCX_SELF_SEG_SIZE=8K
+UCX_TCP_AF_PRIO=inet,inet6
+UCX_TCP_BRIDGE_ENABLE=n
+UCX_TCP_CM_FAILURE=DIAG
+UCX_TCP_CM_REUSEADDR=n
+UCX_TCP_CM_PRIV_DATA_LEN=2K
+UCX_TCP_CM_SNDBUF=auto
+UCX_TCP_CM_RCVBUF=auto
+UCX_TCP_CM_SYN_CNT=auto
+UCX_TCP_MAX_SHORT (deprecated)
+UCX_TCP_MAX_BCOPY (deprecated)
+UCX_TCP_ALLOC=huge,thp,md,mmap,heap
+UCX_TCP_FAILURE=DIAG
+UCX_TCP_MAX_NUM_EPS=256
+UCX_TCP_TX_SEG_SIZE=8K
+UCX_TCP_RX_SEG_SIZE=64K
+UCX_TCP_MAX_IOV=6
+UCX_TCP_SENDV_THRESH=2K
+UCX_TCP_PREFER_DEFAULT=y
+UCX_TCP_PUT_ENABLE=y
+UCX_TCP_CONN_NB=n
+UCX_TCP_MAX_POLL=16
+UCX_TCP_MAX_CONN_RETRIES=25
+UCX_TCP_NODELAY=y
+UCX_TCP_SNDBUF=auto
+UCX_TCP_RCVBUF=auto
+UCX_TCP_SYN_CNT=auto
+UCX_TCP_TX_MAX_BUFS=-1
+UCX_TCP_TX_BUFS_GROW=8
+UCX_TCP_TX_MAX_CHUNK_SIZE=128M
+UCX_TCP_TX_GROW_FACTOR=1.000
+UCX_TCP_RX_MAX_BUFS=-1
+UCX_TCP_RX_BUFS_GROW=8
+UCX_TCP_RX_MAX_CHUNK_SIZE=128M
+UCX_TCP_RX_GROW_FACTOR=1.000
+UCX_TCP_PORT_RANGE=0
+UCX_TCP_MAX_BW=2200.00MBps
+UCX_TCP_KEEPIDLE=10000000.00us
+UCX_TCP_KEEPCNT=auto
+UCX_TCP_KEEPINTVL=2000000.00us
+UCX_TCP_EP_BIND_SRC_ADDR=try
+UCX_SYSV_HUGETLB_MODE=try
+UCX_SYSV_MAX_SHORT (deprecated)
+UCX_SYSV_MAX_BCOPY (deprecated)
+UCX_SYSV_ALLOC=md,mmap,heap
+UCX_SYSV_FAILURE=DIAG
+UCX_SYSV_MAX_NUM_EPS=inf
+UCX_SYSV_BW=15360.00MBps
+UCX_SYSV_FIFO_SIZE=256
+UCX_SYSV_SEG_SIZE=8256
+UCX_SYSV_FIFO_RELEASE_FACTOR=0.500
+UCX_SYSV_RX_MAX_BUFS=-1
+UCX_SYSV_RX_BUFS_GROW=512
+UCX_SYSV_RX_MAX_CHUNK_SIZE=128M
+UCX_SYSV_RX_GROW_FACTOR=2.000
+UCX_SYSV_FIFO_HUGETLB=n
+UCX_SYSV_FIFO_ELEM_SIZE=128
+UCX_SYSV_FIFO_MAX_POLL=16
+UCX_SYSV_ERROR_HANDLING=n
+UCX_SYSV_SEND_OVERHEAD=am_short:0.01us,am_bcopy:0.01us
+UCX_SYSV_RECV_OVERHEAD=am_short:0.01us,am_bcopy:0.01us
+UCX_POSIX_HUGETLB_MODE=try
+UCX_POSIX_DIR=/dev/shm
+UCX_POSIX_SHM_MIN_SIZE=16M
+UCX_POSIX_USE_PROC_LINK=y
+UCX_POSIX_MAX_SHORT (deprecated)
+UCX_POSIX_MAX_BCOPY (deprecated)
+UCX_POSIX_ALLOC=md,mmap,heap
+UCX_POSIX_FAILURE=DIAG
+UCX_POSIX_MAX_NUM_EPS=inf
+UCX_POSIX_BW=15360.00MBps
+UCX_POSIX_FIFO_SIZE=256
+UCX_POSIX_SEG_SIZE=8256
+UCX_POSIX_FIFO_RELEASE_FACTOR=0.500
+UCX_POSIX_RX_MAX_BUFS=-1
+UCX_POSIX_RX_BUFS_GROW=512
+UCX_POSIX_RX_MAX_CHUNK_SIZE=128M
+UCX_POSIX_RX_GROW_FACTOR=1.000
+UCX_POSIX_FIFO_HUGETLB=n
+UCX_POSIX_FIFO_ELEM_SIZE=128
+UCX_POSIX_FIFO_MAX_POLL=16
+UCX_POSIX_ERROR_HANDLING=n
+UCX_POSIX_SEND_OVERHEAD=am_short:0.01us,am_bcopy:0.01us
+UCX_POSIX_RECV_OVERHEAD=am_short:0.01us,am_bcopy:0.01us
+UCX_NET_DEVICES=all
+UCX_SHM_DEVICES=all
+UCX_ACC_DEVICES=all
+UCX_SELF_DEVICES=all
+UCX_TLS=all
+UCX_PROTOS=all
+UCX_ALLOC_PRIO=md:sysv,md:posix,thp,md:*,mmap,heap
+UCX_RNDV_FRAG_SIZE=host:512K,cuda:4M
+UCX_RNDV_FRAG_ALLOC_COUNT=host:128,cuda:128
+UCX_SOCKADDR_TLS_PRIORITY=rdmacm,tcp,sockcm
+UCX_SOCKADDR_AUX_TLS (deprecated)
+UCX_WARN_INVALID_CONFIG=y
+UCX_RX_MPOOL_SIZES=64,1K
+UCX_RCACHE_ENABLE=try
+UCX_RCACHE_MEM_PRIO=500
+UCX_RCACHE_OVERHEAD=auto
+UCX_RCACHE_MAX_REGIONS=inf
+UCX_RCACHE_MAX_SIZE=inf
+UCX_RCACHE_MAX_UNRELEASED=inf
+UCX_RCACHE_PURGE_ON_FORK=y
+UCX_SELECT_DISTANCE_MD=cuda_cpy
+UCX_MEMTYPE_REG_WHOLE_ALLOC_TYPES=cuda
+UCX_RNDV_MEMTYPE_DIRECT_SIZE=inf
+UCX_BCOPY_THRESH=auto
+UCX_RNDV_THRESH=intra:auto,inter:auto
+UCX_RNDV_SEND_NBR_THRESH=256K
+UCX_RNDV_THRESH_FALLBACK=inf
+UCX_RNDV_PERF_DIFF=1.000
+UCX_MULTI_LANE_MAX_RATIO=4.000
+UCX_MULTI_PATH_RATIO=auto
+UCX_MAX_EAGER_LANES=1
+UCX_MAX_EAGER_RAILS=1
+UCX_MAX_RNDV_LANES=2
+UCX_MAX_RNDV_RAILS=2
+UCX_MAX_RMA_LANES=1
+UCX_MAX_RMA_RAILS=1
+UCX_MIN_RNDV_CHUNK_SIZE=16K
+UCX_RMA_ZCOPY_MAX_SEG_SIZE=auto
+UCX_RNDV_SCHEME=auto
+UCX_RKEY_PTR_SEG_SIZE=512K
+UCX_ZCOPY_THRESH=auto
+UCX_BCOPY_BW=auto
+UCX_ATOMIC_MODE=guess
+UCX_ADDRESS_DEBUG_INFO=n
+UCX_MAX_WORKER_NAME=32
+UCX_MAX_WORKER_ADDRESS_NAME=32
+UCX_USE_MT_MUTEX=n
+UCX_ADAPTIVE_PROGRESS=y
+UCX_SEG_SIZE=8K
+UCX_TM_THRESH=1K
+UCX_TM_MAX_BB_SIZE=1K
+UCX_TM_FORCE_THRESH=8K
+UCX_TM_SW_RNDV=n
+UCX_NUM_EPS=auto
+UCX_NUM_PPN=auto
+UCX_RNDV_FRAG_MEM_TYPE=host,cuda
+UCX_RNDV_FRAG_MEM_TYPES=host,cuda
+UCX_RNDV_PIPELINE_SEND_THRESH=inf
+UCX_RNDV_PIPELINE_SHM_ENABLE=y
+UCX_RNDV_PIPELINE_ERROR_HANDLING=n
+UCX_FLUSH_WORKER_EPS=y
+UCX_FENCE_MODE=auto
+UCX_UNIFIED_MODE=n
+UCX_CM_USE_ALL_DEVICES=y
+UCX_LISTENER_BACKLOG=auto
+UCX_PROTO_ENABLE=y
+UCX_PROTO_REQUEST_RESET=n
+UCX_KEEPALIVE_INTERVAL=20000000.00us
+UCX_KEEPALIVE_NUM_EPS=128
+UCX_DYNAMIC_TL_SWITCH_INTERVAL=inf
+UCX_DYNAMIC_TL_PROGRESS_FACTOR=789683.02us
+UCX_RESOLVE_REMOTE_EP_ID=off
+UCX_PROTO_INDIRECT_ID=auto
+UCX_RNDV_PUT_FORCE_FLUSH=n
+UCX_SA_DATA_VERSION=v2
+UCX_RKEY_MPOOL_MAX_MD=2
+UCX_ADDRESS_VERSION=v1
+UCX_PROTO_INFO=n
+UCX_RNDV_ALIGN_THRESH=64K
+UCX_PROTO_INFO_DIR=
+UCX_REG_NONBLOCK_MEM_TYPES=
+UCX_PREFER_OFFLOAD=y
+UCX_PROTO_OVERHEAD=single:0.01us,multi:0.01us,rndv_offload:0.04us,rndv_rtr:0.04us,rndv_rts:0.28us,sw:0.04us,rkey_ptr:0.00us
+UCX_GVA_ENABLE=n
+UCX_GVA_MLOCK=y
+UCX_GVA_PREFETCH=y
+UCX_ROCM_COPY_RCACHE=try
+UCX_ROCM_COPY_RCACHE_MEM_PRIO=1000
+UCX_ROCM_COPY_RCACHE_OVERHEAD=auto
+UCX_ROCM_COPY_RCACHE_MAX_REGIONS=inf
+UCX_ROCM_COPY_RCACHE_MAX_SIZE=inf
+UCX_ROCM_COPY_RCACHE_MAX_UNRELEASED=inf
+UCX_ROCM_COPY_RCACHE_PURGE_ON_FORK=y
+UCX_ROCM_COPY_DMABUF=n
+UCX_ROCM_COPY_MAX_SHORT (deprecated)
+UCX_ROCM_COPY_MAX_BCOPY (deprecated)
+UCX_ROCM_COPY_ALLOC=huge,thp,md,mmap,heap
+UCX_ROCM_COPY_FAILURE=DIAG
+UCX_ROCM_COPY_MAX_NUM_EPS=inf
+UCX_ROCM_COPY_D2H_THRESH=256
+UCX_ROCM_COPY_H2D_THRESH=1M
+UCX_ROCM_COPY_ENABLE_ASYNC_ZCOPY=y
+UCX_ROCM_COPY_LAT=0.10us
+UCX_ROCM_COPY_SIGPOOL_MAX_ELEMS=1024
+UCX_ROCM_IPC_MAX_SHORT (deprecated)
+UCX_ROCM_IPC_MAX_BCOPY (deprecated)
+UCX_ROCM_IPC_ALLOC=huge,thp,md,mmap,heap
+UCX_ROCM_IPC_FAILURE=DIAG
+UCX_ROCM_IPC_MAX_NUM_EPS=inf
+UCX_ROCM_IPC_MIN_ZCOPY=128
+UCX_ROCM_IPC_LAT=0.10us
+UCX_CMA_MEMORY_INVALIDATE=n
+UCX_CMA_MAX_SHORT (deprecated)
+UCX_CMA_MAX_BCOPY (deprecated)
+UCX_CMA_ALLOC=huge,thp,mmap,heap
+UCX_CMA_FAILURE=DIAG
+UCX_CMA_MAX_NUM_EPS=inf
+UCX_CMA_BW=11145.00MBps
+UCX_CMA_MAX_IOV=16
+UCX_CMA_SEG_SIZE=512K
+UCX_CMA_TX_QUOTA=1
+UCX_CMA_TX_MAX_BUFS=-1
+UCX_CMA_TX_BUFS_GROW=8
+UCX_CMA_TX_MAX_CHUNK_SIZE=128M

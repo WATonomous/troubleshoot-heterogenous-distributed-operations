@@ -1,45 +1,46 @@
-# Troubles running collective operations on heterogenous cluster with UCC and UCX
+# Troubleshooting Collective Operations on a Heterogeneous Cluster with UCC and UCX
 
-This repository outlines the approach for a proof of concept that runs HPC workloads on heterogeneous AWS public cloud instances with varying GPU accelerators, along with the issues encountered during execution.
+This repository provides a proof-of-concept setup to run HPC workloads on AWS public cloud instances with different GPU accelerators. It also documents the issues encountered during deployment.
 
-## Infrastructure setup
+## Infrastructure Setup
 
-The workload was run on two types of [g4](https://aws.amazon.com/ec2/instance-types/g4/) instances with varying GPU acceleration nodes:
+This workload is configured for two types of [g4](https://aws.amazon.com/ec2/instance-types/g4/) instances, each with distinct GPU types:
 
-- **g4ad.xlarge** with one AMD Radeon Pro V520 GPU (gfx1011) using the [ROCm 6.2.2](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/quick-start.html) toolkit
-- **g4dn.xlarge** with one NVIDIA T4 GPU using the [CUDA 12.4](https://developer.nvidia.com/cuda-12-4-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local) toolkit
+- **g4ad.xlarge**: One AMD Radeon Pro V520 GPU (gfx1011) using [ROCm 6.2.2](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/quick-start.html).
+- **g4dn.xlarge**: One NVIDIA T4 GPU using [CUDA 12.4](https://developer.nvidia.com/cuda-12-4-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local).
 
-The instances were running the Ubuntu 22.04 OS (`ubuntu-eks/k8s_1.30/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*`-based AMI images).
+These instances are running Ubuntu 22.04 (`ubuntu-eks/k8s_1.30/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*` AMI images). Since g4ad instances don’t support [EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html), networking was configured for standard performance with bandwidth up to 10 Gbps and security groups allowing traffic on all ports.
 
-Since g4ad instances do not support [EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html), networking was configured using the standard setup, with bandwidth up to 10 Gigabit and security groups allowing traffic on all ports
+## Collective Operations Environment
 
-## Collectiove operations environment setup
+Collective operations run as distributed PyTorch jobs in OCI containers.
 
-The collective operations are intended to run within OCI containers as distributed PyTorch jobs.
+Separate Docker images were built for each instance type and published to Docker Hub:
 
-For both instance types, dedicated images were built and published to my dockerhub:
-- **[g4ad](./g4ad_rocm_build/Dockerfile)** required building most of the ROCm algebraic libraries from source to support the gfx1011 architecture.
-- **[g4dn](./g4dn_cuda_build/Dockerfile)** was built to maintain consistency across collective libraries (OMPI, UCX, UCC).
+- **[g4ad](./g4ad_rocm_build/Dockerfile)**: Required building ROCm algebraic libraries from source to support the gfx1011 architecture.
+    - [UCX configuration](./config_infos/rocm_ucx_config)
+    - [UCC configuration](./config_infos/rocm_ucc_config)
 
+- **[g4dn](./g4dn_cuda_build/Dockerfile)**: Built with compatible versions of collective libraries (OMPI, UCX, UCC).
+    - [UCX configuration](./config_infos/cuda_ucx_config)
+    - [UCC configuration](./config_infos/cuda_ucc_config)
 
-In addition to running the workload, these images were also used to build PyTorch (`v2.5.0-rc7`) from source with NCCL, MPI, and UCC support, following [this guide](https://github.com/pytorch/pytorch/blob/main/.ci/pytorch/build.sh).
-
-Several [backends](https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends) for the `torchrun` approach were tested, but without success:
+Additional tests were conducted using [PyTorch distributed backends](https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends) for the `torchrun` setup, but with no successful outcomes:
 - [nccl <--> rccl](https://github.com/ROCm/rccl/issues/1220)
 - [ucc](https://github.com/openucx/ucx/discussions/9985)
 
-Suspecting potential issues related to limited networking configuration and encouraged by the [response](https://github.com/openucx/ucx/discussions/9985), I decided to migrate to using MPI with UCC and UCX support.
+Following guidance from the UCX team ([response here](https://github.com/openucx/ucx/discussions/9985)), we switched to using MPI with UCC and UCX.
 
-## Running collective operations
+## Running Collective Operations
 
-To run a simple PoC for collective operations configuration, I ran 3 containers using published Docker images with host network configuration (you can also use the images with PyTorch pre-installed):
+To test collective operations, start three containers using the Docker images with host network configurations (pre-installed PyTorch images are available):
 
-- **g4ad** (there's also an image with UCX and UCC built from the ROCm fork source available with the tag `rocmucx`):
+- **g4ad**: A version with UCX and UCC built from the ROCm fork is available with the `rocmucx` tag.
     ```bash
     docker run -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
     --device=/dev/kfd --device=/dev/dri --group-add video --ipc=host \
     --shm-size 8G --user root --rm --network host \
-    rafalsiwek/g4ad_pytorch_build:openucx bash
+    rafalsiwek/g4ad_ucc_ucp:latest bash
     ```
 
 - **g4dn**:
@@ -47,69 +48,65 @@ To run a simple PoC for collective operations configuration, I ran 3 containers 
     docker run --gpus all -it --rm --user root --cap-add=SYS_PTRACE \
     --security-opt seccomp=unconfined --ipc=host --shm-size 8G \
     --network host --group-add video \
-    rafalsiwek/g4dn_pytorch_build:latest bash
+    rafalsiwek/g4dn_ucc_ucp:latest bash
     ```
 
-I decided to run MPI worker containers with passwordless SSH. To configure this, follow these steps:
+These MPI worker containers are set up for passwordless SSH. Follow these steps:
 
-1. In the "master container", generate an SSH key:
+1. In the "master container," generate an SSH key:
     ```bash
     ssh-keygen -t rsa
     ```
 
-2. Copy the public key to the "worker containers" by pasting it into the `~/.ssh/authorized_keys` file.
+2. Copy the public key to each "worker container" by pasting it into the `~/.ssh/authorized_keys` file.
 
-3. Modify the SSH daemon (sshd) port on the worker containers to a port not used by the host instances:
+3. Update the SSH daemon (`sshd`) port in each worker container to a port not used by the host:
     ```bash
     vi /etc/ssh/sshd_config
     ```
 
-4. Change the default SSH port on the "master container":
+4. Change the SSH port in the "master container":
     ```bash
     vi /etc/ssh/ssh_config
     ```
 
-5. Run the SSH server on the worker containers:
+5. Start the SSH server in each worker container:
     ```bash
     /usr/sbin/sshd -D
     ```
 
-I began testing with the [full PyTorch distributed example](./scripts/test_full_train.py), using only the TCP transport layer:
+## Tests Run
 
+The [tests](./tests/) directory contains scripts and log outputs for the tests conducted.
+
+### [Send_Recv](./tests/send_recv/)
+
+This test sends and receives a GPU memory buffer between nodes. The CUDA node generated a buffer with `cudaMemcpy`, while the ROCm node used `hipMemcpy`.
+
+After compiling with `nvcc` on the CUDA node and `hipcc` on the ROCm node, the MPI job was triggered with:
 ```bash
-mpirun -np 2 --allow-run-as-root \ 
-    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
-    -x UCX_NET_DEVICES=ens5 --mca pml ucx -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp \ 
-    --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 \
-    -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0  /opt/conda/envs/py_3.12/bin/python /test_full_train.py 10 10
+mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+/test_send_recv
 ```
-However, the test failed with the following error: 
-```
-Segmentation fault: invalid permissions for mapped object at address
-```
+This job completed successfully ([log output](./tests/send_recv/test_run_send_recv_mpi.log)). The same job was also run with `-x UCC_LOG_LEVEL=DEBUG` ([log output](./tests/send_recv/test_run_send_recv_mpi_ucc_verbose.log)).
 
-The same happened when I tried to run a [simple test with just `send` and `recv` functions](./scripts/test_simple.py):
+### [AllReduce](./tests/allreduce/)
 
+This test involves running an allreduce operation in a heterogeneous ring. As in the `send_recv` test, the CUDA node generated a buffer with `cudaMemcpy`, while the ROCm node used `hipMemcpy`.
+
+The job was run with:
 ```bash
-mpirun -np 2 --allow-run-as-root \ 
-    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
-    -x UCX_NET_DEVICES=ens5 --mca pml ucx -x UCX_TLS=tcp -mca btl ^uct --mca pml_ucx_tls tcp \ 
-    --mca osc ucx --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 \
-    -x TORCH_BLAS_PREFER_CUBLASLT=0 -x TORCH_BLAS_PREFER_HIPBLASLT=0  /opt/conda/envs/py_3.12/bin/python /test_simple.py
+mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+/test_allreduce
 ```
-This resulted in the same segmentation fault.
+An error occurred on the ROCm node/rank with the `ucp_mem_type_unpack` method ([log output with backtrace](./tests/allreduce/test_run_allreduce_mpi_basic.log)).
 
-In the [test_results](./test_results/) directory, I appended log files from different verbosity configurations passed to the mpirun command:
+Suspecting UCX was using different TLs, the job was re-run with the `-mca pml_ucx_tls=tcp` option to force TCP and `-mca pml_ucx_devices ens4` to specify the `ens4` network device. However, the failure persisted ([log output](./tests/allreduce/test_run_allreduce_mpi_selected_ucx_tl.log)).
 
-- ucc_verbose: with -x UCC_LOG_LEVEL=DEBUG
-- ucx_verbose: with -x UCX_LOG_LEVEL=DEBUG
-- ucx_pml_verbose: with --mca pml_ucx_verbose 100
+Following recommendations in [UCC Issue #1039](https://github.com/openucx/ucc/issues/1039), the job was run with `-x UCC_TL_UCP_TUNE=inf` to adjust the UCP transport layer for UCC. ***Although the ROCm node/rank failed, the CUDA node/rank completed the allreduce job ([log output](./tests/allreduce/test_run_allreduce_mpi_tuned_ucp.log)).***
 
-The only successful result occurred in a simple scenario when running mpirun without UCX configuration:
-
-```bash
-mpirun -np 2 --allow-run-as-root \
-    --host <rocm_ip>,<cuda-ip> -x MASTER_ADDR=<cuda-ip> -x MASTER_PORT=1234 \
-    --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include ens5 \
-    /opt/conda/envs/py_3.12/bin/python /test_simple.py
-```
+Still suspecting integration issues between UCC and UCX, debug logging for UCX was enabled with `-x UCX_LOG_LEVEL=DEBUG` ([log output](./tests/allreduce/test_run_allreduce_mpi_tuned_ucx_debug_dump.log)). The `send_recv` example was also re-run with UCX debug logs ([log output](./tests/send_recv/test_run_send_recv_mpi_tuned_ucx_debug_dump.log)), though the logs did not provide clear conclusions for me.

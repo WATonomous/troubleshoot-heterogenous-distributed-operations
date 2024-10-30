@@ -1,0 +1,81 @@
+/# mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 -x UCC_TL_UCP_TUNE=inf /test_allreduce
+
+[ip-cuda:00673] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-cuda:00673] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm:01767] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-rocm:01767] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm:01767] common_ucx.c:342 self/memory: did not match transport list
+[ip-rocm:01767] common_ucx.c:342 tcp/ens5: did not match transport list
+[ip-rocm:01767] common_ucx.c:342 tcp/lo: did not match transport list
+[ip-rocm:01767] common_ucx.c:342 sysv/memory: did not match transport list
+[ip-rocm:01767] common_ucx.c:342 posix/memory: did not match transport list
+[ip-rocm:01767] common_ucx.c:342 rocm_copy/rocm_cpy: did not match transport list
+[ip-rocm:01767] common_ucx.c:227 readlink(/sys/class/infiniband/rocm_ipc/device/driver) failed: No such file or directory
+[ip-rocm:01767] common_ucx.c:337 rocm_ipc/rocm_ipc: matched transport list but not device list
+[ip-rocm:01767] common_ucx.c:342 cma/memory: did not match transport list
+[ip-rocm:01767] common_ucx.c:347 support level is transports only
+[ip-rocm:01767] pml_ucx.c:293 mca_pml_ucx_init
+[ip-rocm:01767] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-rocm:01767] pml_ucx.c:124 Pack local worker address, size 302
+[ip-rocm:01767] pml_ucx.c:358 created ucp context 0x6e8250, worker 0x7250f0
+[ip-rocm:01767] pml_ucx_component.c:147 returning priority 19
+[ip-cuda:00673] common_ucx.c:342 self/memory: did not match transport list
+[ip-cuda:00673] common_ucx.c:342 tcp/ens5: did not match transport list
+[ip-cuda:00673] common_ucx.c:342 tcp/lo: did not match transport list
+[ip-cuda:00673] common_ucx.c:342 sysv/memory: did not match transport list
+[ip-cuda:00673] common_ucx.c:342 posix/memory: did not match transport list
+[ip-cuda:00673] common_ucx.c:342 cuda_copy/cuda: did not match transport list
+[ip-cuda:00673] common_ucx.c:227 readlink(/sys/class/infiniband/cuda/device/driver) failed: No such file or directory
+[ip-cuda:00673] common_ucx.c:337 cuda_ipc/cuda: matched transport list but not device list
+[ip-cuda:00673] common_ucx.c:342 cma/memory: did not match transport list
+[ip-cuda:00673] common_ucx.c:347 support level is transports only
+[ip-cuda:00673] pml_ucx.c:293 mca_pml_ucx_init
+[ip-cuda:00673] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-cuda:00673] pml_ucx.c:124 Pack local worker address, size 300
+[ip-cuda:00673] pml_ucx.c:358 created ucp context 0x559f6b88fb30, worker 0x559f6b907ad0
+[ip-cuda:00673] pml_ucx_component.c:147 returning priority 19
+[ip-cuda:00673] pml_ucx.c:192 Got proc 1 address, size 300
+[ip-cuda:00673] pml_ucx.c:423 connecting to proc. 1
+[ip-rocm:01767] pml_ucx.c:192 Got proc 0 address, size 302
+[ip-rocm:01767] pml_ucx.c:423 connecting to proc. 0
+[ip-rocm:01767] pml_ucx.c:192 Got proc 1 address, size 82
+[ip-rocm:01767] pml_ucx.c:423 connecting to proc. 1
+[ip-cuda:00673] pml_ucx.c:192 Got proc 0 address, size 82
+[ip-cuda:00673] pml_ucx.c:423 connecting to proc. 0
+[ip-cuda:00673] coll_ucc_module.c:383 - mca_coll_ucc_init_ctx() initialized ucc context
+[ip-cuda:00673] coll_ucc_module.c:469 - mca_coll_ucc_module_enable() creating ucc_team for comm 0x559f6b28b880, comm_id 0, comm_size 2
+[ip-rocm:01767] coll_ucc_module.c:383 - mca_coll_ucc_init_ctx() initialized ucc context
+[ip-rocm:01767] coll_ucc_module.c:469 - mca_coll_ucc_module_enable() creating ucc_team for comm 0x2045a0, comm_id 0, comm_size 2
+ROCm Rank 0
+CUDA Rank 1
+[ip-cuda:00673] coll_ucc_allreduce.c:69 - mca_coll_ucc_allreduce() running ucc allreduce
+[ip-rocm:01767] coll_ucc_allreduce.c:69 - mca_coll_ucc_allreduce() running ucc allreduce
+[ip-rocm:1767 :0:1767] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7cb432200020)
+==== backtrace (tid:   1767) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7cb54d8d1aac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x7cb54d8d1c8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x7cb54d8d1fc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x7cb54db67520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0977) [0x7cb54dcc5977]
+ 5  /usr/lib/ucx/libuct_rocm.so.0(uct_rocm_copy_ep_put_short+0x37) [0x7cb543ecd7c7]
+ 6  /usr/lib/libucp.so.0(ucp_mem_type_unpack+0x17a) [0x7cb54d99b57a]
+ 7  /usr/lib/libucp.so.0(ucp_eager_only_handler+0xfa6) [0x7cb54da1cee6]
+ 8  /usr/lib/libuct.so.0(+0x29f2e) [0x7cb54440ff2e]
+ 9  /usr/lib/libuct.so.0(+0x2ac78) [0x7cb544410c78]
+10  /usr/lib/libuct.so.0(+0x2eda4) [0x7cb544414da4]
+11  /usr/lib/libucs.so.0(ucs_event_set_wait+0x141) [0x7cb54d8e3951]
+12  /usr/lib/libuct.so.0(uct_tcp_iface_progress+0x90) [0x7cb544414e90]
+13  /usr/lib/libucs.so.0(+0x2cf27) [0x7cb54d8c1f27]
+14  /usr/lib/libucs.so.0(+0x2d47b) [0x7cb54d8c247b]
+15  /usr/lib/libucp.so.0(ucp_worker_progress+0x7a) [0x7cb54d994bda]
+16  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_progress+0x51c) [0x7cb542881adc]
+17  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_start+0x1c2) [0x7cb542882892]
+18  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x7cb54dafb33b]
+19  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x7cb54fa918e2]
+20  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7cb54fa04e44]
+21  /test_ucc_allreduce() [0x201f8c]
+22  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7cb54db4ed90]
+23  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7cb54db4ee40]
+24  /test_ucc_allreduce() [0x201d95]
+=================================
+CUDA Rank 1 received allreduce result: 1

@@ -11,7 +11,7 @@ git submodule update --init --recursive
 ./configure --prefix=/usr               \
   --with-ucx=/usr                       \
   --with-rocm=/opt/rocm                 \
-  --with-rocm-arch="--offload-arch=$PYTORCH_ROCM_ARCH"
+  --with-rocm-arch="--offload-arch=$PYTORCH_ROCM_ARCH" --with-tls=ucp
 time make -j
 sudo make install
 
