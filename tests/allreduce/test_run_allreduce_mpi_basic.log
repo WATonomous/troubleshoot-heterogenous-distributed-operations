@@ -1,4 +1,4 @@
-# mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 /test_allreduce
+/# mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 /test_allreduce
 
 [ip-cuda:00463] common_ucx.c:183 using OPAL memory hooks as external events
 [ip-cuda:00463] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
@@ -76,8 +76,8 @@ CUDA Rank 1
 21  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x7038bbced33b]
 22  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x7038bdc838e2]
 23  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7038bdbf6e44]
-24  /test_ucc_allreduce() [0x201f8c]
+24  /test_allreduce() [0x201f8c]
 25  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7038bbd40d90]
 26  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7038bbd40e40]
-27  /test_ucc_allreduce() [0x201d95]
+27  /test_allreduce() [0x201d95]
 =================================

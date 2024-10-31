@@ -1,0 +1,139 @@
+#/ mpirun --allow-run-as-root -np 1 -host <cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCC_LOG_LEVEL=DEBUG -x UCC_COLL_TRACE=DEBUG /test_bidirectional_send_recv : -np 1 -host <rocm_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCC_LOG_LEVEL=DEBUG -x UCC_COLL_TRACE=DEBUG /test_bidirectional_send_recv
+
+[1730374747.310245] [ip-cuda:1357 :0]   ucc_proc_info.c:309  UCC  DEBUG proc pid 1357, host ip-cuda, host_hash 16945930162202883404, sockid 0, numaid 0
+[1730374747.310271] [ip-cuda:1357 :0] ucc_constructor.c:188  UCC  INFO  version: 1.4.0, loaded from: /usr/lib/libucc.so.1, cfg file: n/a
+[1730374747.310295] [ip-cuda:1357 :0]          ucc_mc.c:67   UCC  DEBUG mc cpu mc initialized
+[1730374747.311527] [ip-rocm:1326 :0]   ucc_proc_info.c:309  UCC  DEBUG proc pid 1326, host ip-rocm, host_hash 11795545672493888606, sockid 0, numaid 0
+[1730374747.311556] [ip-rocm:1326 :0] ucc_constructor.c:188  UCC  INFO  version: 1.4.0, loaded from: /usr/lib/libucc.so.1, cfg file: n/a
+[1730374747.311572] [ip-rocm:1326 :0]          ucc_mc.c:67   UCC  DEBUG mc cpu mc initialized
+[1730374747.311590] [ip-rocm:1326 :0]          ucc_mc.c:67   UCC  DEBUG mc rocm mc initialized
+[1730374747.311610] [ip-rocm:1326 :0]          ucc_ec.c:63   UCC  DEBUG ec cpu ec initialized
+[1730374747.311629] [ip-rocm:1326 :0]          ucc_ec.c:63   UCC  DEBUG ec rocm ec initialized
+[1730374747.311660] [ip-rocm:1326 :0]    cl_basic_lib.c:20   CL_BASIC DEBUG initialized lib object: 0x18a1070
+[1730374747.311671] [ip-rocm:1326 :0]         ucc_lib.c:150  UCC  DEBUG lib_prefix "OMPI_UCC_": initialized component "basic" score 10
+[1730374747.311717] [ip-rocm:1326 :0]      tl_ucp_lib.c:69   TL_UCP DEBUG initialized lib object: 0x18a3f00
+[1730374747.314151] [ip-cuda:1357 :0]         mc_cuda.c:65   cuda mc DEBUG driver version 12040
+[1730374747.314166] [ip-cuda:1357 :0]         mc_cuda.c:77   cuda mc DEBUG cuCtxGetDevice() failed: invalid device context
+[1730374747.314175] [ip-cuda:1357 :0]          ucc_mc.c:67   UCC  DEBUG mc cuda mc initialized
+[1730374747.314190] [ip-cuda:1357 :0]          ucc_ec.c:63   UCC  DEBUG ec cpu ec initialized
+[1730374747.317199] [ip-cuda:1357 :0]          ucc_ec.c:63   UCC  DEBUG ec cuda ec initialized
+[1730374747.317232] [ip-cuda:1357 :0]    cl_basic_lib.c:20   CL_BASIC DEBUG initialized lib object: 0x64200ab7bd50
+[1730374747.317247] [ip-cuda:1357 :0]         ucc_lib.c:150  UCC  DEBUG lib_prefix "OMPI_UCC_": initialized component "basic" score 10
+[1730374747.317293] [ip-cuda:1357 :0]      tl_ucp_lib.c:69   TL_UCP DEBUG initialized lib object: 0x64200ab7bed0
+[1730374747.322148] [ip-rocm:1326 :0]  tl_ucp_context.c:281  TL_UCP DEBUG initialized tl context: 0x17d94c0
+[1730374747.322173] [ip-rocm:1326 :0] cl_basic_context.c:50   CL_BASIC DEBUG initialized cl context: 0x18c0270
+[1730374747.325502] [ip-cuda:1357 :0]  tl_ucp_context.c:281  TL_UCP DEBUG initialized tl context: 0x64200aa89560
+[1730374747.325520] [ip-cuda:1357 :0] cl_basic_context.c:50   CL_BASIC DEBUG initialized cl context: 0x64200abe03d0
+[1730374747.336397] [ip-cuda:1357 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x64200ac2cb50
+[1730374747.336411] [ip-cuda:1357 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x64200ac2cb50
+[1730374747.336416] [ip-cuda:1357 :0]     ucc_context.c:839  UCC  DEBUG created ucc context 0x64200ab7c160 for lib OMPI_UCC_
+[1730374747.336554] [ip-rocm:1326 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x192e3b0
+[1730374747.336571] [ip-rocm:1326 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x192e3b0
+[1730374747.336575] [ip-rocm:1326 :0]     ucc_context.c:839  UCC  DEBUG created ucc context 0x18a03e0 for lib OMPI_UCC_
+[1730374747.336605] [ip-rocm:1326 :0]        ucc_team.c:369  UCC  DEBUG team 0x1930120 rank 1, ctx_rank 1, map_type 1
+[1730374747.336618] [ip-rocm:1326 :0]     tl_ucp_team.c:100  TL_UCP DEBUG opt knomial radix: 2
+[1730374747.336622] [ip-rocm:1326 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x19306e0
+[1730374747.336457] [ip-cuda:1357 :0]        ucc_team.c:369  UCC  DEBUG team 0x64200ac2e8c0 rank 0, ctx_rank 0, map_type 1
+[1730374747.336636] [ip-rocm:1326 :0]   cl_basic_team.c:52   CL_BASIC DEBUG posted cl team: 0x17a7110
+[1730374747.336641] [ip-rocm:1326 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x19306e0
+[1730374747.336476] [ip-cuda:1357 :0]     tl_ucp_team.c:100  TL_UCP DEBUG opt knomial radix: 2
+[1730374747.336481] [ip-cuda:1357 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x64200ac2ee70
+[1730374747.336484] [ip-cuda:1357 :0]   cl_basic_team.c:52   CL_BASIC DEBUG posted cl team: 0x64200aa1d000
+[1730374747.336489] [ip-cuda:1357 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x64200ac2ee70
+[1730374747.336649] [ip-rocm:1326 :0]   cl_basic_team.c:120  CL_BASIC DEBUG initialized tl ucp team
+[1730374747.336663] [ip-rocm:1326 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type host
+[1730374747.336669] [ip-rocm:1326 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type rocm
+[1730374747.336498] [ip-cuda:1357 :0]   cl_basic_team.c:120  CL_BASIC DEBUG initialized tl ucp team
+[1730374747.336506] [ip-cuda:1357 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type host
+[1730374747.336526] [ip-cuda:1357 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type cuda
+[1730374747.336533] [ip-cuda:1357 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type cuda-managed
+[1730374747.336624] [ip-cuda:1357 :0]        ucc_team.c:471  UCC  INFO  ===== COLL_SCORE_MAP (team_id 32768, size 2) =====
+[1730374747.336643] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Allgather:
+[1730374747.336643] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336643] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336643] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336672] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Allgatherv:
+[1730374747.336672] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336672] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336672] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336711] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Allreduce:
+[1730374747.336711] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336711] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336711] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730374747.336745] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Alltoall:
+[1730374747.336745] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..257}:TL_UCP:10 {258..inf}:TL_UCP:10 
+[1730374747.336745] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336745] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336780] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Alltoallv:
+[1730374747.336780] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336780] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336780] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336811] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Barrier:
+[1730374747.336811] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336811] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336811] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336841] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Bcast:
+[1730374747.336841] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336841] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336841] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336874] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Fanin:
+[1730374747.336874] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336874] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336874] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336910] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Fanout:
+[1730374747.336910] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336910] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336910] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336942] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Gather:
+[1730374747.336942] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336942] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336942] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.336970] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Gatherv:
+[1730374747.336970] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.336970] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.336970] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.337002] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Reduce:
+[1730374747.337002] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.337002] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.337002] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.337030] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Reduce_scatter:
+[1730374747.337030] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.337030] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.337030] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.337060] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Reduce_scatterv:
+[1730374747.337060] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.337060] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.337060] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.337093] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  Scatterv:
+[1730374747.337093] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730374747.337093] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730374747.337093] [ip-cuda:1357 :0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730374747.337125] [ip-cuda:1357 :0]        ucc_team.c:474  UCC  INFO  ================================================
+Rank 0 (CUDA) sending data...
+Rank 0 (CUDA) sent data
+[ip-rocm:1326 :0:1326] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x799984e01020)
+==== backtrace (tid:   1326) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x799a98c3baac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x799a98c3bc8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x799a98c3bfc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x799a98ed1520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0977) [0x799a9902f977]
+ 5  /usr/lib/ucx/libuct_rocm.so.0(uct_rocm_copy_ep_put_short+0x37) [0x799a8f2397c7]
+ 6  /usr/lib/libucp.so.0(ucp_mem_type_unpack+0x17a) [0x799a98d0557a]
+ 7  /usr/lib/libucp.so.0(ucp_eager_only_handler+0xfa6) [0x799a98d86ee6]
+ 8  /usr/lib/libuct.so.0(+0x29f2e) [0x799a8f779f2e]
+ 9  /usr/lib/libuct.so.0(+0x2ac78) [0x799a8f77ac78]
+10  /usr/lib/libuct.so.0(+0x2eda4) [0x799a8f77eda4]
+11  /usr/lib/libucs.so.0(ucs_event_set_wait+0x141) [0x799a98c4d951]
+12  /usr/lib/libuct.so.0(uct_tcp_iface_progress+0x90) [0x799a8f77ee90]
+13  /usr/lib/libucp.so.0(ucp_worker_progress+0x7a) [0x799a98cfebda]
+14  /usr/lib/libmpi.so.40(mca_pml_ucx_recv+0x184) [0x799a9af3e454]
+15  /usr/lib/libmpi.so.40(PMPI_Recv+0x18f) [0x799a9ad976af]
+16  /test_bidirectional_send_recv() [0x202103]
+17  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x799a98eb8d90]
+18  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x799a98eb8e40]
+19  /test_bidirectional_send_recv() [0x201e95]
+=================================
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------

@@ -92,6 +92,23 @@ mpirun --allow-run-as-root -np 2 -H <rocm_ip>,<cuda_ip> \
 ```
 This job completed successfully ([log output](./tests/send_recv/test_run_send_recv_mpi.log)). The same job was also run with `-x UCC_LOG_LEVEL=DEBUG` ([log output](./tests/send_recv/test_run_send_recv_mpi_ucc_verbose.log)).
 
+### [Bidirectional Send_Recv](./tests/bidirectional_send_recv/)
+
+This test runs a bidirectional simple send and receive operation where Rank 0 (CUDA) sends and recvs data from Rank1 (ROCM)
+
+The job was triggered wuth:
+```bash
+mpirun --allow-run-as-root -np 1 -host <cuda_ip> \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-x UCC_LOG_LEVEL=DEBUG -x UCC_COLL_TRACE=DEBUG \
+/test_bidirectional_send_recv : \
+-np 1 -host <rocm_ip> \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-x UCC_LOG_LEVEL=DEBUG -x UCC_COLL_TRACE=DEBUG \
+/test_bidirectional_send_recv
+```
+An error occurred on the ROCm node/rank with the `ucp_mem_type_unpack` method ([log output with backtrace](./tests/bidirectional_send_recv/test_run_bidirectional_send_recv_mpi_cuda_to_rocm_ucc_debug_dump.log)).
+
 ### [AllReduce](./tests/allreduce/)
 
 This test involves running an allreduce operation in a heterogeneous ring. As in the `send_recv` test, the CUDA node generated a buffer with `cudaMemcpy`, while the ROCm node used `hipMemcpy`.
@@ -110,3 +127,9 @@ Suspecting UCX was using different TLs, the job was re-run with the `-mca pml_uc
 Following recommendations in [UCC Issue #1039](https://github.com/openucx/ucc/issues/1039), the job was run with `-x UCC_TL_UCP_TUNE=inf` to adjust the UCP transport layer for UCC. ***Although the ROCm node/rank failed, the CUDA node/rank completed the allreduce job ([log output](./tests/allreduce/test_run_allreduce_mpi_tuned_ucp.log)).***
 
 Still suspecting integration issues between UCC and UCX, debug logging for UCX was enabled with `-x UCX_LOG_LEVEL=DEBUG` ([log output](./tests/allreduce/test_run_allreduce_mpi_tuned_ucx_debug_dump.log)). The `send_recv` example was also re-run with UCX debug logs ([log output](./tests/send_recv/test_run_send_recv_mpi_tuned_ucx_debug_dump.log)), though the logs did not provide clear conclusions for me.
+
+Additional tests were run for the `allreduce` collective on a homogeneous setup with CUDA-only and ROCm-only environments. The CUDA-only ring tests were successful ([UCC debug and trace logs here](./tests/allreduce/test_run_allreduce_cuda_only_ucc_debug_dump.log)). However, the ROCm-only ring encountered errors with the `uct_rocm_copy_ep_put_short` function in the `ucx/libuct_rocm` library, which is consistent with the errors seen in previous tests.
+
+To gather more details, I ran additional jobs to capture UCX debug logs ([UCX logs with `-x UCX_LOG_LEVEL=DEBUG` here](./tests/allreduce/test_run_allreduce_rocm_only_ucx_debug_dump.log) and [logs with `-mca pml_ucx_verbose 100` here](./tests/allreduce/test_run_allreduce_rocm_only_ucx_pml_debug_dump.log)).
+
+To verify that the issue is specific to ROCm-only ring communication, I also tested simple `send_recv` operations. These showed the same error ([logs with `-x UCX_LOG_LEVEL=DEBUG` here](./tests/send_recv/test_run_send_recv_rocm_only_ucx_debug_dump.log) and [logs with `-mca pml_ucx_verbose 100` here](./tests/send_recv/test_run_send_recv_rocm_only_ucx_pml_debug_dump.log)). In contrast, the `send_recv` test on the CUDA-only ring completed without issues.

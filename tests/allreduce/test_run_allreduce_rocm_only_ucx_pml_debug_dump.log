@@ -1,0 +1,104 @@
+/# mpirun --allow-run-as-root -np 2 -H <rocm_0_ip>,<rocm_1_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -mca pml_ucx_verbose 100 /test_allreduce
+
+[ip-rocm_0:01819] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-rocm_0:01819] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm_1:00297] common_ucx.c:183 using OPAL memory hooks as external events
+[ip-rocm_1:00297] pml_ucx.c:207 mca_pml_ucx_open: UCX version 1.18.0
+[ip-rocm_0:01819] common_ucx.c:342 self/memory: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:342 tcp/ens5: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:342 tcp/lo: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:342 sysv/memory: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:342 posix/memory: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:342 rocm_copy/rocm_cpy: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:227 readlink(/sys/class/infiniband/rocm_ipc/device/driver) failed: No such file or directory
+[ip-rocm_0:01819] common_ucx.c:337 rocm_ipc/rocm_ipc: matched transport list but not device list
+[ip-rocm_0:01819] common_ucx.c:342 cma/memory: did not match transport list
+[ip-rocm_0:01819] common_ucx.c:347 support level is transports only
+[ip-rocm_0:01819] pml_ucx.c:293 mca_pml_ucx_init
+[ip-rocm_1:00297] common_ucx.c:342 self/memory: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:342 tcp/ens5: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:342 tcp/lo: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:342 sysv/memory: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:342 posix/memory: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:342 rocm_copy/rocm_cpy: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:227 readlink(/sys/class/infiniband/rocm_ipc/device/driver) failed: No such file or directory
+[ip-rocm_1:00297] common_ucx.c:337 rocm_ipc/rocm_ipc: matched transport list but not device list
+[ip-rocm_1:00297] common_ucx.c:342 cma/memory: did not match transport list
+[ip-rocm_1:00297] common_ucx.c:347 support level is transports only
+[ip-rocm_1:00297] pml_ucx.c:293 mca_pml_ucx_init
+[ip-rocm_0:01819] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-rocm_0:01819] pml_ucx.c:124 Pack local worker address, size 302
+[ip-rocm_0:01819] pml_ucx.c:358 created ucp context 0x1838810, worker 0x188f020
+[ip-rocm_0:01819] pml_ucx_component.c:147 returning priority 19
+[ip-rocm_1:00297] pml_ucx.c:124 Pack remote worker address, size 82
+[ip-rocm_1:00297] pml_ucx.c:124 Pack local worker address, size 302
+[ip-rocm_1:00297] pml_ucx.c:358 created ucp context 0x1605810, worker 0x165c020
+[ip-rocm_1:00297] pml_ucx_component.c:147 returning priority 19
+[ip-rocm_1:00297] pml_ucx.c:192 Got proc 1 address, size 302
+[ip-rocm_1:00297] pml_ucx.c:423 connecting to proc. 1
+[ip-rocm_0:01819] pml_ucx.c:192 Got proc 0 address, size 302
+[ip-rocm_0:01819] pml_ucx.c:423 connecting to proc. 0
+[ip-rocm_0:01819] pml_ucx.c:192 Got proc 1 address, size 82
+[ip-rocm_0:01819] pml_ucx.c:423 connecting to proc. 1
+[ip-rocm_1:00297] pml_ucx.c:192 Got proc 0 address, size 82
+[ip-rocm_1:00297] pml_ucx.c:423 connecting to proc. 0
+ROCm Rank 0
+ROCm Rank 1
+[ip-rocm_1:297  :0:297] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x77edea401020)
+[ip-rocm_0:1819 :0:1819] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x721969001020)
+==== backtrace (tid:    297) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x77eefe24caac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x77eefe24cc8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x77eefe24cfc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x77eefe4e2520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0977) [0x77eefe640977]
+ 5  /usr/lib/ucx/libuct_rocm.so.0(uct_rocm_copy_ep_put_short+0x37) [0x77eef486e7c7]
+ 6  /usr/lib/libucp.so.0(ucp_mem_type_unpack+0x17a) [0x77eefe31657a]
+==== backtrace (tid:   1819) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x721a7d030aac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x721a7d030c8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x721a7d030fc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x721a7d2c6520]
+ 4  /lib/x86_64-linux-gnu/libc.so.6(+0x1a0977) [0x721a7d424977]
+ 5  /usr/lib/ucx/libuct_rocm.so.0(uct_rocm_copy_ep_put_short+0x37) [0x721a736537c7]
+ 6  /usr/lib/libucp.so.0(ucp_mem_type_unpack+0x17a) [0x721a7d0fa57a]
+ 7  /usr/lib/libucp.so.0(ucp_eager_only_handler+0xfa6) [0x721a7d17bee6]
+ 7  /usr/lib/libucp.so.0(ucp_eager_only_handler+0xfa6) [0x77eefe397ee6]
+ 8  /usr/lib/libuct.so.0(+0x29f2e) [0x77eef4d8af2e]
+ 9  /usr/lib/libuct.so.0(+0x2ac78) [0x77eef4d8bc78]
+10  /usr/lib/libuct.so.0(+0x2eda4) [0x77eef4d8fda4]
+11  /usr/lib/libucs.so.0(ucs_event_set_wait+0x141) [0x77eefe25e951]
+12  /usr/lib/libuct.so.0(uct_tcp_iface_progress+0x90) [0x77eef4d8fe90]
+13  /usr/lib/libucp.so.0(ucp_worker_progress+0x7a) [0x77eefe30fbda]
+14  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_reduce_scatter_knomial_progress+0x225) [0x77eef30df6c5]
+15  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_reduce_scatter_knomial_start+0x190) [0x77eef30e1230]
+16  /usr/lib/libucc.so.1(ucc_dependency_handler+0x5c) [0x77eefe47a6dc]
+17  /usr/lib/libucc.so.1(ucc_event_manager_notify+0x63) [0x77eefe4793b3]
+18  /usr/lib/libucc.so.1(ucc_event_manager_notify+0x63) [0x77eefe4793b3]
+19  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x77eefe47633b]
+20  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x77ef0040c8e2]
+21  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x77ef0037fe44]
+22  /test_allreduce() [0x201f8c]
+23  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x77eefe4c9d90]
+ 8  /usr/lib/libuct.so.0(+0x29f2e) [0x721a73b6ef2e]
+ 9  /usr/lib/libuct.so.0(+0x2ac78) [0x721a73b6fc78]
+10  /usr/lib/libuct.so.0(+0x2eda4) [0x721a73b73da4]
+11  /usr/lib/libucs.so.0(ucs_event_set_wait+0x141) [0x721a7d042951]
+12  /usr/lib/libuct.so.0(uct_tcp_iface_progress+0x90) [0x721a73b73e90]
+13  /usr/lib/libucp.so.0(ucp_worker_progress+0x7a) [0x721a7d0f3bda]
+14  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_reduce_scatter_knomial_progress+0x225) [0x721971cdf6c5]
+15  /usr/lib/libucc.so.1(+0x133ab) [0x721a7d25b3ab]
+16  /usr/lib/libucc.so.1(ucc_context_progress+0x47) [0x721a7d256d47]
+17  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0x12b) [0x721a7f1f091b]
+18  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x721a7f163e44]
+19  /test_allreduce() [0x201f8c]
+20  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x721a7d2add90]
+21  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x721a7d2ade40]
+22  /test_allreduce() [0x201d95]
+=================================
+24  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x77eefe4c9e40]
+25  /test_allreduce() [0x201d95]
+=================================
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------

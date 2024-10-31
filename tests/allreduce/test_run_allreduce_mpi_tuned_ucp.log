@@ -73,9 +73,9 @@ CUDA Rank 1
 18  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x7cb54dafb33b]
 19  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x7cb54fa918e2]
 20  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7cb54fa04e44]
-21  /test_ucc_allreduce() [0x201f8c]
+21  /test_allreduce() [0x201f8c]
 22  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7cb54db4ed90]
 23  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7cb54db4ee40]
-24  /test_ucc_allreduce() [0x201d95]
+24  /test_allreduce() [0x201d95]
 =================================
 CUDA Rank 1 received allreduce result: 1

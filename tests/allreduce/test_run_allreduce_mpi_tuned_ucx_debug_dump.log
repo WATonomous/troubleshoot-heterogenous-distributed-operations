@@ -2,13 +2,13 @@
 
 [1730328276.820259] [ip-cuda:815  :0]           debug.c:1154 UCX  DEBUG using signal stack 0x70c983659000 size 148160
 [1730328276.820410] [ip-cuda:815  :0]            init.c:120  UCX  DEBUG /usr/lib/libucs.so.0 loaded at 0x70c983c14000
-[1730328276.820435] [ip-cuda:815  :0]            init.c:122  UCX  DEBUG cmd line: /test_ucc_allreduce 
+[1730328276.820435] [ip-cuda:815  :0]            init.c:122  UCX  DEBUG cmd line: /test_allreduce 
 [1730328276.820452] [ip-cuda:815  :0]          module.c:72   UCX  DEBUG ucs library path: /usr/lib/libucs.so.0
 [1730328276.820460] [ip-cuda:815  :0]          module.c:280  UCX  DEBUG loading modules for ucs
 [1730328276.824412] [ip-rocm:1921 :0]           debug.c:1154 UCX  DEBUG using signal stack 0x79e480647000 size 141824
 [1730328276.825010] [ip-rocm:1921 :0]             cpu.c:338  UCX  DEBUG measured tsc frequency 2796.726 MHz after 0.40 ms
 [1730328276.825043] [ip-rocm:1921 :0]            init.c:120  UCX  DEBUG /usr/lib/libucs.so.0 loaded at 0x79e489c0e000
-[1730328276.825087] [ip-rocm:1921 :0]            init.c:122  UCX  DEBUG cmd line: /test_ucc_allreduce 
+[1730328276.825087] [ip-rocm:1921 :0]            init.c:122  UCX  DEBUG cmd line: /test_allreduce 
 [1730328276.825112] [ip-rocm:1921 :0]          module.c:72   UCX  DEBUG ucs library path: /usr/lib/libucs.so.0
 [1730328276.825118] [ip-rocm:1921 :0]          module.c:280  UCX  DEBUG loading modules for ucs
 [1730328276.837781] [ip-cuda:815  :0]            time.c:22   UCX  DEBUG arch clock frequency: 2500000000.00 Hz
@@ -3562,10 +3562,10 @@ CUDA Rank 1
 18  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x79e489e7433b]
 19  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x79e48be0a8e2]
 20  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x79e48bd7de44]
-21  /test_ucc_allreduce() [0x201f8c]
+21  /test_allreduce() [0x201f8c]
 22  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x79e489ec7d90]
 23  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x79e489ec7e40]
-24  /test_ucc_allreduce() [0x201d95]
+24  /test_allreduce() [0x201d95]
 =================================
 [1730328277.456827] [ip-cuda:815  :0]           mpool.c:281  UCX  DEBUG mpool CUDA Event Objects: allocated chunk 0x64c9e5f3dbd4 of 1108 bytes with 16 elements
 CUDA Rank 1 received allreduce result: 1
