@@ -35,7 +35,7 @@ Following guidance from the UCX team ([response here](https://github.com/openucx
 
 To test collective operations, start three containers using the Docker images with host network configurations (pre-installed PyTorch images are available):
 
-- **g4ad**: A version with UCX and UCC built from the ROCm fork is available with the `rocmucx` tag.
+- **g4ad**:
     ```bash
     docker run -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
     --device=/dev/kfd --device=/dev/dri --group-add video --ipc=host \
