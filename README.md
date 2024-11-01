@@ -133,3 +133,24 @@ Additional tests were run for the `allreduce` collective on a homogeneous setup 
 To gather more details, I ran additional jobs to capture UCX debug logs ([UCX logs with `-x UCX_LOG_LEVEL=DEBUG` here](./tests/allreduce/test_run_allreduce_rocm_only_ucx_debug_dump.log) and [logs with `-mca pml_ucx_verbose 100` here](./tests/allreduce/test_run_allreduce_rocm_only_ucx_pml_debug_dump.log)).
 
 To verify that the issue is specific to ROCm-only ring communication, I also tested simple `send_recv` operations. These showed the same error ([logs with `-x UCX_LOG_LEVEL=DEBUG` here](./tests/send_recv/test_run_send_recv_rocm_only_ucx_debug_dump.log) and [logs with `-mca pml_ucx_verbose 100` here](./tests/send_recv/test_run_send_recv_rocm_only_ucx_pml_debug_dump.log)). In contrast, the `send_recv` test on the CUDA-only ring completed without issues.
+
+As a result the root of the `uct_rocm_copy_ep_put_short` issue with ROCm ranks was related to the fact that AWS EC2 g4ad machines do not supprt (Large BAR setting)[https://github.com/openucx/ucx/wiki/Build-and-run-ROCM-UCX-OpenMPI#sanity-check-for-large-bar-setting] and can be circumvent with the following variables (for more context look [here](https://github.com/openucx/ucc/issues/1043)):
+```bash
+UCX_ROCM_COPY_D2H_THRESH=0
+UCX_ROCM_COPY_H2D_THRESH=0
+UCC_EC_ROCM_REDUCE_HOST_LIMIT=0
+UCC_EC_ROCM_COPY_HOST_LIMIT=0
+OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0
+OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0
+```
+
+
+### [PyTorch](./tests/pytorch/)
+
+To test ML workflows, I built PyTorch (v2.5.1) from source with MPI support following [this guide](https://github.com/pytorch/pytorch/blob/main/.ci/pytorch/build.sh). Experiments were run using `mpirun` with UCX PML and UCC collective configurations.
+
+Running a [bi-directional send/recv test](./tests/pytorch/test_bidirectional_send_recv.py) was successful, confirming basic communication across GPUs ([logs available here](./tests/pytorch/test_run_bidirectional_send_recv_mpi_ucc.log)).
+
+However, testing collective operations with UCC, such as the [allreduce test](./tests/pytorch/test_allreduce.py), and also with the official [PyTorch distributed examples](https://github.com/pytorch/examples/blob/main/distributed/ddp-tutorial-series/multinode.py), led to a failure on the `ucp_tag_send_nbx` operation for both ranks ([logs and backtrace available here](./tests/pytorch/test_run_allreduce_mpi_with_ucc_debug.log)).
+
+Running the allreduce test with UCC collectives disabled for MPI yielded partial success, where the operation completed successfully on the CUDA rank but failed on the ROCm rank ([logs and backtrace here](./tests/pytorch/test_run_allreduce_mpi_only.log)).

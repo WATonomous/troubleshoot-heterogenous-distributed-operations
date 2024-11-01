@@ -1,0 +1,202 @@
+/# mpirun --allow-run-as-root -np 2 -H <cuda_ip>,<rocm_ip> -x MASTER_ADDR=<rocm_ip> -x MASTER_PORT=1234 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 -x UCC_TL_UCP_TUNE=inf -x UCC_COLL_TRACE=DEBUG -x UCC_LOG_LEVEL=DEBUG /opt/conda/envs/py_3.12/bin/python /test_allreduce.py
+
+[1730462574.598701] [ip-cuda:24449:0]   ucc_proc_info.c:309  UCC  DEBUG proc pid 24449, host ip-cuda, host_hash 761723772129539007, sockid 0, numaid 0
+[1730462574.598723] [ip-cuda:24449:0] ucc_constructor.c:188  UCC  INFO  version: 1.4.0, loaded from: /usr/lib/libucc.so.1, cfg file: n/a
+[1730462574.598750] [ip-cuda:24449:0]          ucc_mc.c:67   UCC  DEBUG mc cpu mc initialized
+[1730462574.601525] [ip-rocm:1490 :0]   ucc_proc_info.c:309  UCC  DEBUG proc pid 1490, host ip-rocm, host_hash 6740075926527859685, sockid 0, numaid 0
+[1730462574.601560] [ip-rocm:1490 :0] ucc_constructor.c:188  UCC  INFO  version: 1.4.0, loaded from: /usr/lib/libucc.so.1, cfg file: n/a
+[1730462574.601583] [ip-rocm:1490 :0]          ucc_mc.c:67   UCC  DEBUG mc cpu mc initialized
+[1730462574.601606] [ip-rocm:1490 :0]          ucc_mc.c:67   UCC  DEBUG mc rocm mc initialized
+[1730462574.601624] [ip-rocm:1490 :0]          ucc_ec.c:63   UCC  DEBUG ec cpu ec initialized
+[1730462574.601654] [ip-rocm:1490 :0]          ucc_ec.c:63   UCC  DEBUG ec rocm ec initialized
+[1730462574.601688] [ip-rocm:1490 :0]    cl_basic_lib.c:20   CL_BASIC DEBUG initialized lib object: 0x91fc540
+[1730462574.601732] [ip-rocm:1490 :0]         ucc_lib.c:150  UCC  DEBUG lib_prefix "OMPI_UCC_": initialized component "basic" score 10
+[1730462574.601800] [ip-rocm:1490 :0]      tl_ucp_lib.c:69   TL_UCP DEBUG initialized lib object: 0x8b31960
+[1730462574.603742] [ip-cuda:24449:0]         mc_cuda.c:65   cuda mc DEBUG driver version 12040
+[1730462574.603759] [ip-cuda:24449:0]         mc_cuda.c:77   cuda mc DEBUG cuCtxGetDevice() failed: invalid device context
+[1730462574.603768] [ip-cuda:24449:0]          ucc_mc.c:67   UCC  DEBUG mc cuda mc initialized
+[1730462574.603788] [ip-cuda:24449:0]          ucc_ec.c:63   UCC  DEBUG ec cpu ec initialized
+[1730462574.606890] [ip-cuda:24449:0]          ucc_ec.c:63   UCC  DEBUG ec cuda ec initialized
+[1730462574.606931] [ip-cuda:24449:0]    cl_basic_lib.c:20   CL_BASIC DEBUG initialized lib object: 0x48d3360
+[1730462574.606947] [ip-cuda:24449:0]         ucc_lib.c:150  UCC  DEBUG lib_prefix "OMPI_UCC_": initialized component "basic" score 10
+[1730462574.607008] [ip-cuda:24449:0]      tl_ucp_lib.c:69   TL_UCP DEBUG initialized lib object: 0x6511dd0
+[1730462574.612723] [ip-rocm:1490 :0]  tl_ucp_context.c:281  TL_UCP DEBUG initialized tl context: 0x909c4b0
+[1730462574.612761] [ip-rocm:1490 :0] cl_basic_context.c:50   CL_BASIC DEBUG initialized cl context: 0x92188f0
+[1730462574.615710] [ip-cuda:24449:0]  tl_ucp_context.c:281  TL_UCP DEBUG initialized tl context: 0x67c61a0
+[1730462574.615730] [ip-cuda:24449:0] cl_basic_context.c:50   CL_BASIC DEBUG initialized cl context: 0x6989330
+[1730462574.628346] [ip-cuda:24449:0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x6a75590
+[1730462574.628359] [ip-cuda:24449:0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x6a75590
+[1730462574.628365] [ip-cuda:24449:0]     ucc_context.c:839  UCC  DEBUG created ucc context 0x48d3460 for lib OMPI_UCC_
+[1730462574.628404] [ip-cuda:24449:0]        ucc_team.c:369  UCC  DEBUG team 0x687f750 rank 0, ctx_rank 0, map_type 1
+[1730462574.628231] [ip-rocm:1490 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x92c3840
+[1730462574.628253] [ip-rocm:1490 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x92c3840
+[1730462574.628259] [ip-rocm:1490 :0]     ucc_context.c:839  UCC  DEBUG created ucc context 0x91fc730 for lib OMPI_UCC_
+[1730462574.628424] [ip-cuda:24449:0]     tl_ucp_team.c:100  TL_UCP DEBUG opt knomial radix: 2
+[1730462574.628432] [ip-cuda:24449:0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x6a771c0
+[1730462574.628297] [ip-rocm:1490 :0]        ucc_team.c:369  UCC  DEBUG team 0x9112e40 rank 1, ctx_rank 1, map_type 1
+[1730462574.628319] [ip-rocm:1490 :0]     tl_ucp_team.c:100  TL_UCP DEBUG opt knomial radix: 2
+[1730462574.628332] [ip-rocm:1490 :0]     tl_ucp_team.c:103  TL_UCP DEBUG posted tl team: 0x92c5820
+[1730462574.628440] [ip-cuda:24449:0]   cl_basic_team.c:52   CL_BASIC DEBUG posted cl team: 0x7a494c070550
+[1730462574.628448] [ip-cuda:24449:0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x6a771c0
+[1730462574.628458] [ip-cuda:24449:0]   cl_basic_team.c:120  CL_BASIC DEBUG initialized tl ucp team
+[1730462574.628468] [ip-cuda:24449:0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type host
+[1730462574.628473] [ip-cuda:24449:0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type cuda
+[1730462574.628338] [ip-rocm:1490 :0]   cl_basic_team.c:52   CL_BASIC DEBUG posted cl team: 0x92c5580
+[1730462574.628351] [ip-rocm:1490 :0]     tl_ucp_team.c:202  TL_UCP DEBUG initialized tl team: 0x92c5820
+[1730462574.628367] [ip-rocm:1490 :0]   cl_basic_team.c:120  CL_BASIC DEBUG initialized tl ucp team
+[1730462574.628375] [ip-rocm:1490 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type host
+[1730462574.628388] [ip-rocm:1490 :0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type rocm
+[1730462574.628476] [ip-cuda:24449:0]     tl_ucp_team.c:230  TL_UCP DEBUG enable support for memory type cuda-managed
+[1730462574.628580] [ip-cuda:24449:0]        ucc_team.c:471  UCC  INFO  ===== COLL_SCORE_MAP (team_id 32768, size 2) =====
+[1730462574.628597] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Allgather:
+[1730462574.628597] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628597] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628597] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628631] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Allgatherv:
+[1730462574.628631] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628631] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628631] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628659] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Allreduce:
+[1730462574.628659] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628659] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628659] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..4095}:TL_UCP:10 {4K..inf}:TL_UCP:10 
+[1730462574.628693] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Alltoall:
+[1730462574.628693] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..257}:TL_UCP:10 {258..inf}:TL_UCP:10 
+[1730462574.628693] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628693] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628725] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Alltoallv:
+[1730462574.628725] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628725] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628725] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628750] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Barrier:
+[1730462574.628750] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628750] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628750] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628778] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Bcast:
+[1730462574.628778] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628778] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628778] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628803] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Fanin:
+[1730462574.628803] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628803] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628803] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628838] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Fanout:
+[1730462574.628838] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628838] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628838] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628871] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Gather:
+[1730462574.628871] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628871] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628871] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628894] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Gatherv:
+[1730462574.628894] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628894] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628894] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628920] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Reduce:
+[1730462574.628920] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628920] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628920] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628953] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Reduce_scatter:
+[1730462574.628953] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628953] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628953] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628974] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Reduce_scatterv:
+[1730462574.628974] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628974] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628974] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.628993] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  Scatterv:
+[1730462574.628993] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Host: {0..inf}:TL_UCP:10 
+[1730462574.628993] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	Cuda: {0..inf}:TL_UCP:10 
+[1730462574.628993] [ip-cuda:24449:0] ucc_coll_score_map.c:203  UCC  INFO  	CudaManaged: {0..inf}:TL_UCP:10 
+[1730462574.629008] [ip-cuda:24449:0]        ucc_team.c:474  UCC  INFO  ================================================
+Before all-reduce, CUDA Rank 0 has tensor: 1.0
+[1730462574.856977] [ip-cuda:24449:1]         mc_cuda.c:375  cuda mc DEBUG failed to get current CUDA context ID (201)
+[1730462574.860395] [ip-cuda:24449:1] ec_cuda_executor.c:48   cuda ec DEBUG executor init, eee: 0x7a491d4009c0
+[1730462574.860418] [ip-cuda:24449:1]        ucc_coll.c:306  UCC_COLL DEBUG coll_init: Allreduce sum inplace: dst={0x7a491d200000, 1, float32, Cuda}; CL_BASIC {TL_UCP}, team_id 32768 rank 0, ctx_rank 0, seq_num 0, req 0x7a49140041c0
+[1730462574.860425] [ip-cuda:24449:1]        ucc_coll.c:348  UCC_COLL DEBUG coll post: req 0x7a49140041c0, seq_num 0
+[ip-cuda:24449:1:24454]    tag_send.c:248  Assertion `ucs_async_check_owner_thread(&(ep->worker)->async)' failed
+==== backtrace (tid:  24454) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7a49d576daac]
+ 1  /usr/lib/libucs.so.0(ucs_fatal_error_message+0xb8) [0x7a49d576a8d8]
+ 2  /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d) [0x7a49d576a9fd]
+ 3  /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x2c6) [0x7a49d58d9cc6]
+ 4  /usr/lib/ucc/libucc_tl_ucp.so(+0x2e79e) [0x7a495cdc579e]
+ 5  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_progress+0x320) [0x7a495cdc68e0]
+ 6  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_start+0x1c2) [0x7a495cdc7892]
+ 7  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x7a49d599733b]
+ 8  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x7a49dc9b78e2]
+ 9  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7a49dc92ae44]
+10  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f018c2) [0x7a49cf7338c2]
+11  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112) [0x7a49cf737352]
+12  /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb) [0x7a49b0f19aeb]
+13  /usr/lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7a49dd533ac3]
+14  /usr/lib/x86_64-linux-gnu/libc.so.6(+0x126850) [0x7a49dd5c5850]
+=================================
+[ip-cuda:24449] *** Process received signal ***
+[ip-cuda:24449] Signal: Aborted (6)
+[ip-cuda:24449] Signal code:  (-6)
+[ip-cuda:24449] [ 0] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7a49dd4e1520]
+[ip-cuda:24449] [ 1] /usr/lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7a49dd5359fc]
+[ip-cuda:24449] [ 2] /usr/lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7a49dd4e1476]
+[ip-cuda:24449] [ 3] /usr/lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7a49dd4c77f3]
+[ip-cuda:24449] [ 4] /usr/lib/libucs.so.0(+0x398dd)[0x7a49d576a8dd]
+[ip-cuda:24449] [ 5] /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d)[0x7a49d576a9fd]
+[ip-cuda:24449] [ 6] /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x2c6)[0x7a49d58d9cc6]
+[ip-cuda:24449] [ 7] /usr/lib/ucc/libucc_tl_ucp.so(+0x2e79e)[0x7a495cdc579e]
+[ip-cuda:24449] [ 8] /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_progress+0x320)[0x7a495cdc68e0]
+[ip-cuda:24449] [ 9] /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_start+0x1c2)[0x7a495cdc7892]
+[ip-cuda:24449] [10] /usr/lib/libucc.so.1(ucc_collective_post+0xab)[0x7a49d599733b]
+[ip-cuda:24449] [11] /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2)[0x7a49dc9b78e2]
+[ip-cuda:24449] [12] /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104)[0x7a49dc92ae44]
+[ip-cuda:24449] [13] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f018c2)[0x7a49cf7338c2]
+[ip-cuda:24449] [14] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112)[0x7a49cf737352]
+[ip-cuda:24449] [15] /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb)[0x7a49b0f19aeb]
+[ip-cuda:24449] [16] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x94ac3)[0x7a49dd533ac3]
+[ip-cuda:24449] [17] /usr/lib/x86_64-linux-gnu/libc.so.6(+0x126850)[0x7a49dd5c5850]
+[ip-cuda:24449] *** End of error message ***
+Before all-reduce, ROCM Rank 1 has tensor: 1.0
+[1730462574.944972] [ip-rocm:1490 :1] ec_rocm_executor.c:35   rocm ec DEBUG executor init, eee: 0x7f920f9dc7c0
+[1730462574.945003] [ip-rocm:1490 :1]        ucc_coll.c:306  UCC_COLL DEBUG coll_init: Allreduce sum inplace: dst={0x7f9202a00000, 1, float32, Rocm}; CL_BASIC {TL_UCP}, team_id 32768 rank 1, ctx_rank 1, seq_num 0, req 0x7f91f40026c0
+[ip-rocm:1490 :1:1496]    tag_send.c:248  Assertion `ucs_async_check_owner_thread(&(ep->worker)->async)' failed
+==== backtrace (tid:   1496) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7f93ccaccaac]
+ 1  /usr/lib/libucs.so.0(ucs_fatal_error_message+0xb8) [0x7f93ccac98d8]
+ 2  /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d) [0x7f93ccac99fd]
+ 3  /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x2c6) [0x7f93ccc38cc6]
+ 4  /usr/lib/ucc/libucc_tl_ucp.so(+0x2e79e) [0x7f921410f79e]
+ 5  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_progress+0x320) [0x7f92141108e0]
+ 6  /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_start+0x1c2) [0x7f9214111892]
+ 7  /usr/lib/libucc.so.1(ucc_collective_post+0xab) [0x7f93cccf633b]
+ 8  /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2) [0x7f93d3a308e2]
+ 9  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7f93d39a3e44]
+10  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f01ba2) [0x7f93c6a9cba2]
+11  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112) [0x7f93c6aa0632]
+12  /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb) [0x7f9387f7eaeb]
+13  /lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7f93d45a7ac3]
+14  /lib/x86_64-linux-gnu/libc.so.6(+0x126850) [0x7f93d4639850]
+=================================
+[ip-rocm:01490] *** Process received signal ***
+[ip-rocm:01490] Signal: Aborted (6)
+[ip-rocm:01490] Signal code:  (-6)
+[ip-rocm:01490] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7f93d4555520]
+[ip-rocm:01490] [ 1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7f93d45a99fc]
+[ip-rocm:01490] [ 2] /lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7f93d4555476]
+[ip-rocm:01490] [ 3] /lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7f93d453b7f3]
+[ip-rocm:01490] [ 4] /usr/lib/libucs.so.0(+0x398dd)[0x7f93ccac98dd]
+[ip-rocm:01490] [ 5] /usr/lib/libucs.so.0(ucs_fatal_error_format+0x11d)[0x7f93ccac99fd]
+[ip-rocm:01490] [ 6] /usr/lib/libucp.so.0(ucp_tag_send_nbx+0x2c6)[0x7f93ccc38cc6]
+[ip-rocm:01490] [ 7] /usr/lib/ucc/libucc_tl_ucp.so(+0x2e79e)[0x7f921410f79e]
+[ip-rocm:01490] [ 8] /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_progress+0x320)[0x7f92141108e0]
+[ip-rocm:01490] [ 9] /usr/lib/ucc/libucc_tl_ucp.so(ucc_tl_ucp_allreduce_knomial_start+0x1c2)[0x7f9214111892]
+[ip-rocm:01490] [10] /usr/lib/libucc.so.1(ucc_collective_post+0xab)[0x7f93cccf633b]
+[ip-rocm:01490] [11] /usr/lib/libmpi.so.40(mca_coll_ucc_allreduce+0xf2)[0x7f93d3a308e2]
+[ip-rocm:01490] [12] /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104)[0x7f93d39a3e44]
+[ip-rocm:01490] [13] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f01ba2)[0x7f93c6a9cba2]
+[ip-rocm:01490] [14] /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112)[0x7f93c6aa0632]
+[ip-rocm:01490] [15] /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb)[0x7f9387f7eaeb]
+[ip-rocm:01490] [16] /lib/x86_64-linux-gnu/libc.so.6(+0x94ac3)[0x7f93d45a7ac3]
+[ip-rocm:01490] [17] /lib/x86_64-linux-gnu/libc.so.6(+0x126850)[0x7f93d4639850]
+[ip-rocm:01490] *** End of error message ***
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------

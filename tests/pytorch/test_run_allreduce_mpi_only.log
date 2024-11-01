@@ -1,0 +1,25 @@
+/# mpirun --allow-run-as-root -np 2 -H <cuda_ip>,<rocm_ip> -x MASTER_ADDR=<rocm_ip> -x MASTER_PORT=1234 -mca pml ucx -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /opt/conda/envs/py_3.12/bin/python /test_allreduce.py
+
+Before all-reduce, CUDA Rank 0 has tensor: 1.0
+Before all-reduce, ROCM Rank 1 has tensor: 1.0
+After all-reduce, CUDA Rank 0 has tensor: 2.0
+[ip-rocm:1530 :0:1536] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7b941c600000)
+==== backtrace (tid:   1536) ====
+ 0  /usr/lib/libucs.so.0(ucs_handle_error+0x2dc) [0x7b95ddfcfaac]
+ 1  /usr/lib/libucs.so.0(+0x3cc8f) [0x7b95ddfcfc8f]
+ 2  /usr/lib/libucs.so.0(+0x3cfc4) [0x7b95ddfcffc4]
+ 3  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x7b95e5a58520]
+ 4  /usr/lib/libmpi.so.40(+0x21579d) [0x7b95e500f79d]
+ 5  /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_recursivedoubling+0x47d) [0x7b95e4f0497d]
+ 6  /usr/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_ring+0x889) [0x7b95e4f07309]
+ 7  /usr/lib/libmpi.so.40(ompi_coll_tuned_allreduce_intra_dec_fixed+0x49) [0x7b95e4f53a69]
+ 8  /usr/lib/libmpi.so.40(PMPI_Allreduce+0x104) [0x7b95e4ea6e44]
+ 9  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(+0x5f01ba2) [0x7b95d7f9fba2]
+10  /opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so(_ZN4c10d15ProcessGroupMPI7runLoopEv+0x112) [0x7b95d7fa3632]
+11  /opt/conda/envs/py_3.12/lib/libstdc++.so.6(+0xcdaeb) [0x7b9599481aeb]
+12  /lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7b95e5aaaac3]
+13  /lib/x86_64-linux-gnu/libc.so.6(+0x126850) [0x7b95e5b3c850]
+=================================
+--------------------------------------------------------------------------
+    This help section is empty because PRRTE was built without Sphinx.
+--------------------------------------------------------------------------
