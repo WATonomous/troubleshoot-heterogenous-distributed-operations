@@ -1,0 +1,24 @@
+# mpirun --allow-run-as-root -np 1 -H <cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 /osu-micro-benchmarks-7.2/c/mpi/collective/blocking/osu_allreduce -d cuda -T mpi_float --validation : -np 1 -H <rocm_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /osu-micro-benchmarks-7.2/c/mpi/collective/blocking/osu_allreduce -d rocm -T mpi_float --validation
+
+# OSU MPI-CUDA Allreduce Latency Test v7.2
+# Datatype: MPI_FLOAT.
+# Size       Avg Latency(us)        Validation
+4                     172.84              Pass
+8                     172.00              Pass
+16                    171.90              Pass
+32                    172.92              Pass
+64                    174.09              Pass
+128                   175.20              Pass
+256                   172.96              Pass
+512                   172.40              Pass
+1024                  200.39              Pass
+2048                  180.63              Pass
+4096                  344.45              Pass
+8192                  348.24              Pass
+16384                 453.94              Pass
+32768                 540.66              Pass
+65536                 698.44              Pass
+131072                930.56              Pass
+262144               1218.79              Pass
+524288               2117.54              Pass
+1048576              3802.88              Pass

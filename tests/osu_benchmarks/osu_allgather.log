@@ -1,0 +1,68 @@
+/# mpirun --allow-run-as-root -np 1 -H <cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allgather -d cuda -T all --validation : -np 1 -H <rocm_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allgather -d rocm -T all --validation
+
+# OSU MPI-CUDA Allgather Latency Test v7.4
+# Datatype: MPI_CHAR.
+# Size       Avg Latency(us)        Validation
+1                     180.48              Pass
+2                     180.92              Pass
+4                     174.85              Pass
+8                     181.30              Pass
+16                    176.53              Pass
+32                    181.25              Pass
+64                    175.27              Pass
+128                   175.80              Pass
+256                   175.08              Pass
+512                   188.56              Pass
+1024                  182.15              Pass
+2048                  185.76              Pass
+4096                  188.34              Pass
+8192                  276.46              Pass
+16384                 324.53              Pass
+32768                 393.41              Pass
+65536                 507.01              Pass
+131072                697.60              Pass
+262144                972.96              Pass
+524288               1732.07              Pass
+1048576              3408.08              Pass
+# Datatype: MPI_INT.
+# Size       Avg Latency(us)        Validation
+4                     181.10              Pass
+8                     181.73              Pass
+16                    181.38              Pass
+32                    181.40              Pass
+64                    175.35              Pass
+128                   175.76              Pass
+256                   176.20              Pass
+512                   178.87              Pass
+1024                  176.37              Pass
+2048                  184.07              Pass
+4096                  185.47              Pass
+8192                  234.33              Pass
+16384                 300.77              Pass
+32768                 391.98              Pass
+65536                 473.24              Pass
+131072                653.13              Pass
+262144                981.07              Pass
+524288               1729.21              Pass
+1048576              3271.87              Pass
+# Datatype: MPI_FLOAT.
+# Size       Avg Latency(us)        Validation
+4                     171.53              Pass
+8                     167.14              Pass
+16                    178.11              Pass
+32                    185.34              Pass
+64                    177.70              Pass
+128                   184.22              Pass
+256                   235.98              Pass
+512                   176.64              Pass
+1024                  174.47              Pass
+2048                  175.98              Pass
+4096                  179.63              Pass
+8192                  240.03              Pass
+16384                 308.41              Pass
+32768                 348.45              Pass
+65536                 484.31              Pass
+131072                659.87              Pass
+262144                941.78              Pass
+524288               1745.22              Pass
+1048576              3277.19              Pass

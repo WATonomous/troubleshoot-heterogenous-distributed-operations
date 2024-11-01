@@ -1,0 +1,76 @@
+/# mpirun --allow-run-as-root -np 2 -H <cuda_ip>,<rocm_ip> -mca pml ucx -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_acceler
+or_rocm_memcpyH2D_limit=0 /osu-micro-benchmarks-7.4/c/mpi/pt2pt/standard/osu_bibw -T all --validation D D
+
+
+# OSU MPI-CUDA Bi-Directional Bandwidth Test v7.4
+# Datatype: MPI_CHAR.
+# Size      Bandwidth (MB/s)        Validation
+1                       0.10              Pass
+2                       0.21              Pass
+4                       0.41              Pass
+8                       0.84              Pass
+16                      1.62              Pass
+32                      3.16              Pass
+64                      6.43              Pass
+128                    12.84              Pass
+256                    24.76              Pass
+512                    47.78              Pass
+1024                   96.88              Pass
+2048                  196.37              Pass
+4096                  346.68              Pass
+8192                  274.42              Pass
+16384                 342.83              Pass
+32768                 449.62              Pass
+65536                 516.23              Pass
+131072                450.99              Pass
+262144                512.80              Pass
+524288                605.29              Pass
+1048576               617.41              Pass
+2097152               577.49              Pass
+4194304               632.60              Pass
+# Datatype: MPI_INT.
+# Size      Bandwidth (MB/s)        Validation
+4                       0.42              Pass
+8                       0.82              Pass
+16                      1.59              Pass
+32                      3.08              Pass
+64                      6.45              Pass
+128                    12.68              Pass
+256                    24.87              Pass
+512                    48.76              Pass
+1024                  104.20              Pass
+2048                  203.38              Pass
+4096                  363.74              Pass
+8192                  286.91              Pass
+16384                 347.29              Pass
+32768                 407.66              Pass
+65536                 533.47              Pass
+131072                441.44              Pass
+262144                532.45              Pass
+524288                576.58              Pass
+1048576               599.67              Pass
+2097152               634.40              Pass
+4194304               629.73              Pass
+# Datatype: MPI_FLOAT.
+# Size      Bandwidth (MB/s)        Validation
+4                       0.42              Pass
+8                       0.81              Pass
+16                      1.65              Pass
+32                      3.08              Pass
+64                      6.49              Pass
+128                    12.54              Pass
+256                    25.27              Pass
+512                    48.63              Pass
+1024                  104.12              Pass
+2048                  194.02              Pass
+4096                  341.71              Pass
+8192                  288.15              Pass
+16384                 307.31              Pass
+32768                 451.85              Pass
+65536                 514.58              Pass
+131072                463.27              Pass
+262144                528.59              Pass
+524288                584.47              Pass
+1048576               606.93              Pass
+2097152               617.71              Pass
+4194304               630.64              Pass

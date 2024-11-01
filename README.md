@@ -154,3 +154,16 @@ Running a [bi-directional send/recv test](./tests/pytorch/test_bidirectional_sen
 However, testing collective operations with UCC, such as the [allreduce test](./tests/pytorch/test_allreduce.py), and also with the official [PyTorch distributed examples](https://github.com/pytorch/examples/blob/main/distributed/ddp-tutorial-series/multinode.py), led to a failure on the `ucp_tag_send_nbx` operation for both ranks ([logs and backtrace available here](./tests/pytorch/test_run_allreduce_mpi_with_ucc_debug.log)).
 
 Running the allreduce test with UCC collectives disabled for MPI yielded partial success, where the operation completed successfully on the CUDA rank but failed on the ROCm rank ([logs and backtrace here](./tests/pytorch/test_run_allreduce_mpi_only.log)).
+
+
+### [OSU Micro-Benchmarks](./tests/osu_benchmarks/)
+
+To verify the UCX portion of the software stack, [OSU Micro-Benchmarks 7.4](https://mvapich.cse.ohio-state.edu/benchmarks/) were conducted. Separate builds of the benchmark were created for each type of rank to match the specific GPU hardware: one with CUDA for NVIDIA and one with ROCm for AMD. The benchmarks were run using the GPU device, and here are the test results:
+
+- **P2P Bi-Directional Bandwidth Benchmark** ([results and logs here](./tests/osu_benchmarks/osu_bibw.log)) - This test completed successfully for all data types available, validating both the benchmark and the setup. The results reflect the bandwidth limitations of the setup.
+
+- **Collective AllGather Latency Benchmark** ([results and logs here](./tests/osu_benchmarks/osu_allgather.log)) - The first collective test ran successfully across all available data types, showing expected operation latencies without any errors.
+
+- **Collective AllReduce Latency Benchmark** - This is the primary and most extensive collective test. Running the benchmark with validation disabled was successful ([results and logs here](./tests/osu_benchmarks/osu_allreduce.log)). However, enabling validation led to failures across all tested data types, with logs showing significant discrepancies between expected and actual values ([results and logs here](./tests/osu_benchmarks/osu_allreduce_validation.log)). It is worth noting that, since version 7.2, the OSU benchmark suite updated its validation methods for reduction tests ([see changelog](https://mvapich.cse.ohio-state.edu/static/media/mvapich/CHANGES-OMB.txt)). When re-running the benchmark with version 7.2, validation passed without issues ([results and logs here](./tests/osu_benchmarks/osu_7_2_allreduce_validation.log)).
+
+After these tests, it appears that this heterogeneous setup can handle collective communication with some inherent bandwidth and latency limitations. This raises the question of why collective operations in PyTorch fail on the `ucp_tag_send_nbx` operation, while basic bi-directional `send_recv` operations complete without issue. Could this be due to the way PyTorch implements collective operations? It seems possible, even though PyTorch uses [similar functions](https://github.com/pytorch/pytorch/blob/a979318ef7fabac7e0d7a2101e0e70af75fca7bd/torch/csrc/distributed/c10d/ProcessGroupMPI.cpp#L432) to those in [my allreduce test](./tests/allreduce/test_allreduce_rocm.cpp).

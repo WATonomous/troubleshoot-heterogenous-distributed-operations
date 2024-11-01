@@ -1,0 +1,152 @@
+# mpirun --allow-run-as-root -np 1 -H <cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allreduce -d cuda -T mpi_int --validation='log:/osu_validation' : -np 1 -H <rocm_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allreduce -d rocm -T mpi_int --validation='log:/osu_validation'
+
+# OSU MPI-CUDA Allreduce Latency Test v7.4
+# Datatype: MPI_INT.
+# Size       Avg Latency(us)        Validation
+4                     168.88              Fail
+DATA VALIDATION ERROR: /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allreduce exited with status 1 on message size 4.
+
+__________________________________________________
+
+### MPI_FLOAT CUDA RING VALIDATION LOG SNIPPET ###
+Size: 4, Iteration:0, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                   4.000000          2.000000
+Size: 4, Iteration:1, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                   8.000000          4.000000
+Size: 4, Iteration:2, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  12.000000          6.000000
+Size: 4, Iteration:3, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  16.000000          8.000000
+Size: 4, Iteration:4, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  20.000000         10.000000
+Size: 4, Iteration:5, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  24.000000         12.000000
+Size: 4, Iteration:6, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  28.000000         14.000000
+Size: 4, Iteration:7, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  32.000000         16.000000
+Size: 4, Iteration:8, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  36.000000         18.000000
+Size: 4, Iteration:9, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  40.000000         20.000000
+Size: 4, Iteration:10, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  44.000000         22.000000
+__________________________________________________
+
+### MPI_FLOAT ROCM RING VALIDATION LOG SNIPPET ###
+Size: 4, Iteration:0, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                   4.000000         -0.000000
+Size: 4, Iteration:1, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                   8.000000          0.000000
+Size: 4, Iteration:2, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  12.000000-466227832407371639270740615757824.000000
+Size: 4, Iteration:3, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  16.000000          0.000000
+Size: 4, Iteration:4, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  20.000000          0.000000
+Size: 4, Iteration:5, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  24.000000          0.000000
+Size: 4, Iteration:6, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  28.000000          0.000000
+Size: 4, Iteration:7, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  32.000000          0.000000
+Size: 4, Iteration:8, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  36.000000          0.000000
+Size: 4, Iteration:9, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  40.000000-466227871092997866938874206355456.000000
+Size: 4, Iteration:10, Datatype: MPI_FLOAT
+Position            Expected            Actual
+0                  44.000000          0.000000
+__________________________________________________
+
+
+### MPI_INT CUDA RING VALIDATION LOG SNIPPET ###
+Position            Expected            Actual
+0                         20          16843019
+Size: 4, Iteration:1, Datatype: MPI_INT
+Position            Expected            Actual
+0                         40          16843029
+Size: 4, Iteration:2, Datatype: MPI_INT
+Position            Expected            Actual
+0                         60          16843039
+Size: 4, Iteration:3, Datatype: MPI_INT
+Position            Expected            Actual
+0                         80          16843049
+Size: 4, Iteration:4, Datatype: MPI_INT
+Position            Expected            Actual
+0                        100          16843059
+Size: 4, Iteration:5, Datatype: MPI_INT
+Position            Expected            Actual
+0                        120          16843069
+Size: 4, Iteration:6, Datatype: MPI_INT
+Position            Expected            Actual
+0                        140          16843079
+Size: 4, Iteration:7, Datatype: MPI_INT
+Position            Expected            Actual
+0                        160          16843089
+Size: 4, Iteration:8, Datatype: MPI_INT
+Position            Expected            Actual
+0                        180          16843099
+Size: 4, Iteration:9, Datatype: MPI_INT
+Position            Expected            Actual
+0                        200          16843109
+Size: 4, Iteration:10, Datatype: MPI_INT
+Position            Expected            Actual
+0                        220          16843119
+__________________________________________________
+
+### MPI_INT ROCM RING VALIDATION LOG SNIPPET ###
+Size: 4, Iteration:0, Datatype: MPI_INT
+Position            Expected            Actual
+0                         20       -1903603473
+Size: 4, Iteration:1, Datatype: MPI_INT
+Position            Expected            Actual
+0                         40        1413327695
+Size: 4, Iteration:2, Datatype: MPI_INT
+Position            Expected            Actual
+0                         60        1289428272
+Size: 4, Iteration:3, Datatype: MPI_INT
+Position            Expected            Actual
+0                         80        1289428192
+Size: 4, Iteration:4, Datatype: MPI_INT
+Position            Expected            Actual
+0                        100        1289428192
+Size: 4, Iteration:5, Datatype: MPI_INT
+Position            Expected            Actual
+0                        120        1289428336
+Size: 4, Iteration:6, Datatype: MPI_INT
+Position            Expected            Actual
+0                        140        1413327695
+Size: 4, Iteration:7, Datatype: MPI_INT
+Position            Expected            Actual
+0                        160        1289428240
+Size: 4, Iteration:8, Datatype: MPI_INT
+Position            Expected            Actual
+0                        180        1289428192
+Size: 4, Iteration:9, Datatype: MPI_INT
+Position            Expected            Actual
+0                        200        1289428192
+Size: 4, Iteration:10, Datatype: MPI_INT
+Position            Expected            Actual
+0                        220        1289428336

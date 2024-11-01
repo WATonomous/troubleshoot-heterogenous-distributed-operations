@@ -1,0 +1,68 @@
+/# mpirun --allow-run-as-root -np 1 -H <cuda_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allreduce -d cuda -T all : -np 1 -H <rocm_ip> -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 -x UCC_EC_ROCM_COPY_HOST_LIMIT=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /osu-micro-benchmarks-7.4/c/mpi/collective/blocking/osu_allreduce -d rocm -T all
+
+# OSU MPI-CUDA Allreduce Latency Test v7.4
+# Datatype: MPI_CHAR.
+# Size       Avg Latency(us)
+1                     172.55
+2                     174.44
+4                     175.54
+8                     175.15
+16                    174.98
+32                    176.93
+64                    176.81
+128                   176.33
+256                   178.10
+512                   175.57
+1024                  175.13
+2048                  174.91
+4096                  321.76
+8192                  335.33
+16384                 574.22
+32768                 638.66
+65536                 647.85
+131072                972.61
+262144               1215.26
+524288               1922.23
+1048576              3373.12
+# Datatype: MPI_INT.
+# Size       Avg Latency(us)
+4                     212.17
+8                     174.15
+16                    178.66
+32                    176.86
+64                    174.59
+128                   173.45
+256                   166.69
+512                   166.50
+1024                  201.69
+2048                  174.61
+4096                  330.31
+8192                  345.24
+16384                 522.74
+32768                 551.44
+65536                 738.14
+131072                790.10
+262144               1212.09
+524288               1855.42
+1048576              3359.05
+# Datatype: MPI_FLOAT.
+# Size       Avg Latency(us)
+4                     225.12
+8                     177.92
+16                    177.80
+32                    178.76
+64                    178.62
+128                   179.26
+256                   170.68
+512                   168.44
+1024                  173.07
+2048                  212.99
+4096                  321.02
+8192                  332.32
+16384                 422.35
+32768                 485.63
+65536                 639.75
+131072                979.81
+262144               1178.29
+524288               1857.72
+1048576              3342.59
