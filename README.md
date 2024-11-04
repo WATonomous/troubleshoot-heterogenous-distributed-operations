@@ -184,3 +184,7 @@ This excercise allowed to implement two main solutions to the problem:
     OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0
     ```
 - To avoid failing PyTorch jobs due to possible lack of UCX multi-thread support, UCX has to be rebuilt without the `--enable-mt` flag.
+
+Thanks for help to:
+ - [edgargabriel](https://github.com/edgargabriel)
+ - [Sergei-Lebedev](https://github.com/Sergei-Lebedev)
