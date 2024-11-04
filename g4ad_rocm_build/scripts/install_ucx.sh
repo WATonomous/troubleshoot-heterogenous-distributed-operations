@@ -9,7 +9,6 @@ git submodule update --init --recursive
 
 ./autogen.sh
 ./configure --prefix=/usr           \
-    --enable-mt                     \
     --with-rocm=/opt/rocm           \
     --enable-profiling              \
     --enable-stats
