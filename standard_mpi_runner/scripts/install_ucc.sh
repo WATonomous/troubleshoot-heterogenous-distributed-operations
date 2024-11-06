@@ -13,7 +13,7 @@ git submodule update --init --recursive
   --with-rocm=/opt/rocm                                 \
   --with-rocm-arch="--offload-arch=$PYTORCH_ROCM_ARCH"  \
   --with-tls=ucp
-time make -j
+time make -j$(nproc)
 sudo make install
 
 popd

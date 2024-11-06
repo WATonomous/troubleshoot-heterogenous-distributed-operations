@@ -40,7 +40,7 @@ To test collective operations, start three containers using the Docker images wi
     docker run -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
     --device=/dev/kfd --device=/dev/dri --group-add video --ipc=host \
     --shm-size 8G --user root --rm --network host \
-    rafalsiwek/g4ad_ucc_ucp:latest bash
+    rafalsiwek/g4ad_distributed_ml:1.0_pytorch bash
     ```
 
 - **g4dn**:
@@ -48,7 +48,12 @@ To test collective operations, start three containers using the Docker images wi
     docker run --gpus all -it --rm --user root --cap-add=SYS_PTRACE \
     --security-opt seccomp=unconfined --ipc=host --shm-size 8G \
     --network host --group-add video \
-    rafalsiwek/g4dn_ucc_ucp:latest bash
+    rafalsiwek/g4dn_distributed_ml:1.0_pytorch bash
+    ```
+
+- **t3**
+    ```bash
+    docker run -it --rm --network host rafalsiwek/opmpi_ucx_simple:latest
     ```
 
 These MPI worker containers are set up for passwordless SSH. Follow these steps:

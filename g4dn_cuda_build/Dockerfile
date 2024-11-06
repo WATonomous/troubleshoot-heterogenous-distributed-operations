@@ -86,13 +86,13 @@ RUN bash install_cudss.sh
 RUN rm install_cudss.sh
 
 # Install UCX
-ENV UCX_CHECKOUT_POINT="875125b9a146c498294f0f999abd995256d1e241"
+ENV UCX_CHECKOUT_POINT="68a742fdbf31a87a9e0bfb3ba0b18e58d8323bf7"
 COPY ./scripts/install_ucx.sh install_ucx.sh
 RUN bash ./install_ucx.sh
 RUN rm install_ucx.sh
 
 # Install UCC
-ENV UCC_COMMIT="4c72697c3631749df00de2e5d16a0b4e88818d41"
+ENV UCC_CHECKOUT_POINT="658aa7fbcf40f0b5072d01a3c872bcf10e44ab54"
 COPY ./scripts/install_ucc.sh install_ucc.sh
 RUN bash ./install_ucc.sh
 RUN rm install_ucc.sh
