@@ -18,7 +18,7 @@ jobs:
   build-rocm:
     env:
       IMAGE_NAME: ${{ github.repository }}/rocm
-    runs-on: ubuntu-latest
+    runs-on: slurm-runner-8cpu-2mempercpu-6:00:00time-131072tmpdisk
     permissions:
       contents: read
       packages: write
@@ -68,7 +68,7 @@ jobs:
   build-cuda:
     env:
       IMAGE_NAME: ${{ github.repository }}/cuda
-    runs-on: ubuntu-latest
+    runs-on: slurm-runner-8cpu-2mempercpu-6:00:00time-131072tmpdisk
     permissions:
       contents: read
       packages: write
