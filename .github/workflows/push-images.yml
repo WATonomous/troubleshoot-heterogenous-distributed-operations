@@ -1,4 +1,4 @@
-name: Create and publish Docker images (cloud-v3)
+name: Create and publish Docker images
 
 on:
   push:
