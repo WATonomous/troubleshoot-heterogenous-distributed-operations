@@ -194,5 +194,7 @@ ENV USE_MKLDNN=OFF
 
 # Generate key for SSH server
 RUN ssh-keygen -t ecdsa -N "" -f /root/.ssh/hostkey
+# Generate client key
+RUN ssh-keygen -t ed25519 -N "" -f /root/.ssh/id_ed25519
 
 CMD [ "/usr/sbin/sshd", "-D", "-e", "-f", "/dev/null", "-h", "/root/.ssh/hostkey" ]

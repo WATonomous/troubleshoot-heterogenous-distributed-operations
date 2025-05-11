@@ -1,9 +1,12 @@
 services:
   rocm1:
+    # just for cosmetics
+    hostname: rocm1
+
     build:
       context: g4ad_rocm_build
     volumes:
-      - .:/workspace
+      - .:/workspace:ro
     working_dir: /workspace
     cap_add:
       - SYS_PTRACE
@@ -18,10 +21,13 @@ services:
     shm_size: 8gb
 
   cuda1:
+    # just for cosmetics
+    hostname: cuda1
+
     build:
       context: g4dn_cuda_build
     volumes:
-      - .:/workspace
+      - .:/workspace:ro
     working_dir: /workspace
     ipc: host
     # network_mode: host

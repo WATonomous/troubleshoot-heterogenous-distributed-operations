@@ -1,5 +1,78 @@
 # Troubleshooting Collective Operations on a Heterogeneous Cluster with UCC and UCX
 
+This repo is a proof-of-concept setup to run workloads across ROCm and CUDA. This is a fork of the original (excellent) work by Rafał Siwek (https://github.com/RafalSiwek/troubleshoot-heterogenous-distributed-operations) with some bug fixes and additional experiments.
+
+## Getting started
+
+Start the containers:
+
+```sh
+docker compose up --build
+```
+
+Extract the SSH keys from the containers:
+
+```sh
+(docker compose exec rocm1 cat /root/.ssh/id_ed25519.pub && docker compose exec cuda1 cat /root/.ssh/id_ed25519.pub) > tmp/ssh-pub-keys.txt
+```
+
+Copy the public keys to each worker container by pasting it into the `/root/.ssh/authorized_keys` file:
+
+```sh
+cat tmp/ssh-pub-keys.txt | docker compose exec --no-TTY rocm1 tee /root/.ssh/authorized_keys
+cat tmp/ssh-pub-keys.txt | docker compose exec --no-TTY cuda1 tee /root/.ssh/authorized_keys
+```
+
+Check that each machine can ssh into the other:
+
+```sh
+# should print "cuda1"
+docker compose exec rocm1 ssh root@cuda1 hostname
+
+# should print "rocm1"
+docker compose exec cuda1 ssh root@rocm1 hostname
+```
+
+## Run tests
+
+### Example test (`send_recv`)
+
+Compile the test:
+
+```sh
+docker compose exec rocm1 bash
+
+# in the container
+cp -r tests/send_recv /tmp/
+cd /tmp/send_recv
+hipcc test_send_recv_rocm.cpp -lmpi
+```
+
+```sh
+docker compose exec cuda1 bash
+
+# in the container
+cp -r tests/send_recv /tmp/
+cd /tmp/send_recv
+nvcc test_send_recv_cuda.cpp -lmpi
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec rocm1 bash
+
+mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+/tmp/send_recv/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
+# Old README
+
 This repository provides a proof-of-concept setup to run HPC workloads on AWS public cloud instances with different GPU accelerators. It also documents the issues encountered during deployment.
 
 ## Infrastructure Setup
