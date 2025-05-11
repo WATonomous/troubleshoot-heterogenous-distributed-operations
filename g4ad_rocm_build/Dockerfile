@@ -120,6 +120,9 @@ RUN rm install_amdsmi.sh
 COPY ./scripts/install_rocm_composable_kernel.sh install_rocm_composable_kernel.sh
 RUN bash ./install_rocm_composable_kernel.sh
 RUN rm install_rocm_composable_kernel.sh
+COPY ./scripts/install_rocm_boost.sh install_rocm_boost.sh
+RUN bash ./install_rocm_boost.sh
+RUN rm install_rocm_boost.sh
 COPY ./scripts/install_rocm_miopen.sh install_rocm_miopen.sh
 RUN bash ./install_rocm_miopen.sh
 RUN rm install_rocm_miopen.sh
