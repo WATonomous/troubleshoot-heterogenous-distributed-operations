@@ -1,8 +1,7 @@
 services:
   rocm1:
-    # build:
-    #   context: g4ad_rocm_build
-    image: het-rocm
+    build:
+      context: g4ad_rocm_build
     volumes:
       - .:/workspace
     working_dir: /workspace
