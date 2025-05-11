@@ -127,5 +127,7 @@ ENV USE_ROCM=OFF
 ENV USE_CUDA=ON
 ENV USE_MKLDNN=OFF
 
+# Generate key for SSH server
+RUN ssh-keygen -t ecdsa -N "" -f /root/.ssh/hostkey
 
-CMD [ "bash" ]
+CMD [ "/usr/sbin/sshd", "-D", "-e", "-f", "/dev/null", "-h", "/root/.ssh/hostkey" ]
