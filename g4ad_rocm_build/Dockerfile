@@ -178,6 +178,9 @@ RUN rm install_ompi.sh
 
 ENV LD_LIBRARY_PATH="/opt/rocm/lib:/opt/rocm/rccl/lib:/usr/lib:/usr/lib/openmpi:/usr/lib/ucc:/usr/lib/ucx"
 
+# Insstall additional utils
+RUN apt update && apt install -y iproute2
+
 # Configure PyTorch instalation environment
 ENV USE_MPI=1
 ENV BUILD_TEST=0

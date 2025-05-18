@@ -112,6 +112,9 @@ RUN if [ -h /usr/local/cuda-11.6/cuda-11.6 ]; then rm /usr/local/cuda-11.6/cuda-
 RUN if [ -h /usr/local/cuda-11.7/cuda-11.7 ]; then rm /usr/local/cuda-11.7/cuda-11.7; fi
 RUN if [ -h /usr/local/cuda-12.1/cuda-12.1 ]; then rm /usr/local/cuda-12.1/cuda-12.1; fi
 
+# Insstall additional utils
+RUN apt update && apt install -y iproute2
+
 # Configure PyTorch instalation environment
 ENV TORCH_CUDA_ARCH_LIST="Turing"
 ENV USE_MPI=1
