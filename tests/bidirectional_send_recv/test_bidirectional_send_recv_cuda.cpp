@@ -92,6 +92,11 @@ int main(int argc, char** argv) {
         delete[] host_recv_buffer;
         cudaFree(device_send_buffer);
         cudaFree(device_recv_buffer);
+    } else {
+        std::cerr << "Rank " << rank << " (CUDA) is not supported in this test." << std::endl;
+
+        MPI_Finalize();
+        return 1;
     }
 
     MPI_Finalize();
