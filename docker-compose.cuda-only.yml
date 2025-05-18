@@ -9,8 +9,11 @@ services:
 
     volumes:
       - .:/workspace:ro
+      - ../ucc:/opt/ucc:ro
+      - ../ucx:/opt/ucx:ro
     working_dir: /workspace
     ipc: host
+    privileged: true
     # network_mode: host
     deploy:
       resources:
@@ -30,8 +33,11 @@ services:
 
     volumes:
       - .:/workspace:ro
+      - ../ucc:/opt/ucc:ro
+      - ../ucx:/opt/ucx:ro
     working_dir: /workspace
     ipc: host
+    privileged: true
     # network_mode: host
     deploy:
       resources:

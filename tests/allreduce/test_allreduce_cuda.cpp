@@ -1,6 +1,7 @@
 #include <mpi.h>
 #include <cuda_runtime.h>
 #include <iostream>
+#include <unistd.h>
 
 int main(int argc, char* argv[]) {
     MPI_Init(&argc, &argv);
@@ -21,6 +22,9 @@ int main(int argc, char* argv[]) {
     // Initialize data
     float val = static_cast<float>(rank);
     cudaMemcpy(sendbuf, &val, sizeof(float), cudaMemcpyHostToDevice);
+
+    // sleep for a few seconds to alleviate race conditions
+    sleep(3);
 
     // Perform MPI Allreduce
     MPI_Allreduce(sendbuf, recvbuf, num_elements, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);

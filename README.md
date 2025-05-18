@@ -117,25 +117,8 @@ echo $?
 Compile the test:
 
 ```sh
-docker compose exec rocm1 bash
-
-# in the container
-cp -r tests/allreduce /tmp/
-pushd /tmp/allreduce
-hipcc test_allreduce_rocm.cpp -lmpi
-echo $?
-popd
-```
-
-```sh
-docker compose exec cuda1 bash
-
-# in the container
-cp -r tests/allreduce /tmp/
-pushd /tmp/allreduce
-nvcc test_allreduce_cuda.cpp -lmpi
-echo $?
-popd
+docker compose exec rocm1 bash -c "rm -rf /tmp/allreduce && cp -r tests/allreduce /tmp/ && cd /tmp/allreduce && hipcc test_allreduce_rocm.cpp -lmpi && echo $?"
+docker compose exec cuda1 bash -c "rm -rf /tmp/allreduce && cp -r tests/allreduce /tmp/ && cd /tmp/allreduce && nvcc test_allreduce_cuda.cpp -lmpi && echo $?"
 ```
 
 Run the test (in one of the containers):
@@ -237,12 +220,34 @@ docker compose exec cuda1 bash
 mpirun --allow-run-as-root -np 2 -H cuda1,cuda2 \
 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
--mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
--x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
 /tmp/allreduce/a.out
 
 # make sure the command exited successfully. Should print "0"
 echo $?
+```
+
+## Custom UCC
+
+
+### CUDA
+
+```sh
+# Derived from install_ucc.sh
+
+# Initial build
+docker compose exec cuda1 bash -c "mkdir -p /tmp/ucc-overlay /tmp/ucc-overlay-workdir /tmp/ucc-overlay-upper && mount -t overlay overlay -o lowerdir=/opt/ucc,upperdir=/tmp/ucc-overlay-upper,workdir=/tmp/ucc-overlay-workdir /tmp/ucc-overlay"
+docker compose exec cuda1 bash -c "cd /tmp/ucc-overlay && ./autogen.sh && ./configure --prefix=/usr --with-ucx=/usr --with-cuda=/usr/local/cuda --with-nvcc-gencode="-gencode=arch=compute_75,code=sm_75" --with-tls=ucp --enable-debug && time make -j && make install"
+
+docker compose exec cuda2 bash -c "mkdir -p /tmp/ucc-overlay /tmp/ucc-overlay-workdir /tmp/ucc-overlay-upper && mount -t overlay overlay -o lowerdir=/opt/ucc,upperdir=/tmp/ucc-overlay-upper,workdir=/tmp/ucc-overlay-workdir /tmp/ucc-overlay"
+docker compose exec cuda2 bash -c "cd /tmp/ucc-overlay && ./autogen.sh && ./configure --prefix=/usr --with-ucx=/usr --with-cuda=/usr/local/cuda --with-nvcc-gencode="-gencode=arch=compute_75,code=sm_75" --with-tls=ucp --enable-debug && time make -j && make install"
+
+# Subsequent builds
+docker compose exec cuda1 bash -c "cd /tmp/ucc-overlay && time make -j && make install"
+docker compose exec cuda2 bash -c "cd /tmp/ucc-overlay && time make -j && make install"
+
+# Verify with:
+docker compose exec cuda1 bash -c "ucc_info -v"
+docker compose exec cuda2 bash -c "ucc_info -v"
 ```
 
 

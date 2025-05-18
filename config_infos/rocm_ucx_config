@@ -1,3 +1,5 @@
+# NOTE: This can be generated with `ucx_info -v -d`
+
 ### VERSION ###
 # Library version: 1.18.0
 # Library path: /usr/lib/libucs.so.0
