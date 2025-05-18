@@ -84,15 +84,26 @@ docker compose exec rocm1 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r 
 docker compose exec cuda1 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r tests/bidirectional_send_recv /tmp/ && cd /tmp/bidirectional_send_recv && nvcc test_bidirectional_send_recv_cuda.cpp -lmpi && echo $?"
 ```
 
-Run the test (in one of the containers):
-
-> [!NOTE]
-> The bidirectional send/recv is only programmed to run on cuda for rank0 and rocm for rank1.
+Run the test (cuda rank 0, rocm rank 1):
 
 ```sh
 docker compose exec cuda1 bash
 
 mpirun --allow-run-as-root -np 2 -H cuda1,rocm1 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+/tmp/bidirectional_send_recv/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
+Run the test (rocm rank 0, cuda rank 1  ):
+
+```sh
+docker compose exec rocm1 bash
+
+mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
 /tmp/bidirectional_send_recv/a.out

@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    // Only rank 0 on the CUDA machine performs the send/recv
     if (rank == 0) {
         int* device_send_buffer;
         int* device_recv_buffer;
@@ -49,6 +48,44 @@ int main(int argc, char** argv) {
             std::cerr << host_recv_buffer[i] << " ";
         }
         std::cerr << "..." << std::endl;
+
+        // Cleanup
+        delete[] host_send_buffer;
+        delete[] host_recv_buffer;
+        cudaFree(device_send_buffer);
+        cudaFree(device_recv_buffer);
+    } else if (rank == 1) {
+        int* device_send_buffer;
+        int* device_recv_buffer;
+        int* host_send_buffer = new int[DATA_SIZE];
+        int* host_recv_buffer = new int[DATA_SIZE];
+
+        // Initialize the host send buffer with data
+        for (int i = 0; i < DATA_SIZE; i++) {
+            host_send_buffer[i] = i + 1000;
+        }
+
+        // Allocate device memory and copy data from host to device
+        cudaMalloc((void**)&device_send_buffer, DATA_SIZE * sizeof(int));
+        cudaMalloc((void**)&device_recv_buffer, DATA_SIZE * sizeof(int));
+        cudaMemcpy(device_send_buffer, host_send_buffer, DATA_SIZE * sizeof(int), cudaMemcpyHostToDevice);
+
+        // Receive data from Rank 0
+        MPI_Recv(device_recv_buffer, DATA_SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+        // Copy received data back to host for verification
+        cudaMemcpy(host_recv_buffer, device_recv_buffer, DATA_SIZE * sizeof(int), cudaMemcpyDeviceToHost);
+
+        // Print received data for verification
+        std::cerr << "Rank 1 (CUDA) received data: ";
+        for (int i = 0; i < 5; i++) { // Print first few elements
+            std::cerr << host_recv_buffer[i] << " ";
+        }
+        std::cerr << "..." << std::endl;
+
+        // Send data to rank 1
+        MPI_Send(device_send_buffer, DATA_SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        std::cerr << "Rank 1 (CUDA) sent data";
 
         // Cleanup
         delete[] host_send_buffer;
