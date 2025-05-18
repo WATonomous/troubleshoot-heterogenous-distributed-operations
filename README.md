@@ -35,7 +35,7 @@ docker compose exec cuda1 ssh root@rocm1 hostname
 
 ## Run tests
 
-### Example test (`send_recv`)
+### `send_recv`
 
 Compile the test:
 
@@ -66,6 +66,42 @@ mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
 /tmp/send_recv/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
+### `bidirectional_send_recv`
+
+Compile the test:
+
+```sh
+docker compose exec rocm1 bash
+
+# in the container
+cp -r tests/bidirectional_send_recv /tmp/
+cd /tmp/bidirectional_send_recv
+hipcc test_bidirectional_send_recv_rocm.cpp -lmpi
+```
+
+```sh
+docker compose exec cuda1 bash
+
+# in the container
+cp -r tests/bidirectional_send_recv /tmp/
+cd /tmp/bidirectional_send_recv
+nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec rocm1 bash
+
+mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+/tmp/bidirectional_send_recv/a.out
 
 # make sure the command exited successfully. Should print "0"
 echo $?
