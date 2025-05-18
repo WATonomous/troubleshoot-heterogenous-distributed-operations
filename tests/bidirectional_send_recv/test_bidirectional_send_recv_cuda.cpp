@@ -35,20 +35,20 @@ int main(int argc, char** argv) {
         cudaMemcpy(device_send_buffer, host_send_buffer, DATA_SIZE * sizeof(int), cudaMemcpyHostToDevice);
 
         // Send data to Rank 1 and receive data from Rank 1
-        std::cout << "Rank 0 (CUDA) sending data...";
+        std::cerr << "Rank 0 (CUDA) sending data...";
         MPI_Send(device_send_buffer, DATA_SIZE, MPI_INT, 1, 0, MPI_COMM_WORLD);
-        std::cout << "Rank 0 (CUDA) sent data";
+        std::cerr << "Rank 0 (CUDA) sent data";
         MPI_Recv(device_recv_buffer, DATA_SIZE, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
         // Copy received data back to host for verification
         cudaMemcpy(host_recv_buffer, device_recv_buffer, DATA_SIZE * sizeof(int), cudaMemcpyDeviceToHost);
 
         // Print received data for verification
-        std::cout << "Rank 0 (CUDA) received data: ";
+        std::cerr << "Rank 0 (CUDA) received data: ";
         for (int i = 0; i < 5; i++) { // Print first few elements
-            std::cout << host_recv_buffer[i] << " ";
+            std::cerr << host_recv_buffer[i] << " ";
         }
-        std::cout << "..." << std::endl;
+        std::cerr << "..." << std::endl;
 
         // Cleanup
         delete[] host_send_buffer;

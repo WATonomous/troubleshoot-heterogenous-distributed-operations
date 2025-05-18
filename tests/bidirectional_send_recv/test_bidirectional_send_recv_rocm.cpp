@@ -41,15 +41,15 @@ int main(int argc, char** argv) {
         hipMemcpy(host_recv_buffer, device_recv_buffer, DATA_SIZE * sizeof(int), hipMemcpyDeviceToHost);
 
         // Print received data for verification
-        std::cout << "Rank 1 (ROCm) received data: ";
+        std::cerr << "Rank 1 (ROCm) received data: ";
         for (int i = 0; i < 5; i++) { // Print first few elements
-            std::cout << host_recv_buffer[i] << " ";
+            std::cerr << host_recv_buffer[i] << " ";
         }
-        std::cout << "..." << std::endl;
+        std::cerr << "..." << std::endl;
 
         // Send data to rank 1
         MPI_Send(device_send_buffer, DATA_SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD);
-        std::cout << "Rank 1 (ROCm) sent data";
+        std::cerr << "Rank 1 (ROCm) sent data";
 
         // Cleanup
         delete[] host_send_buffer;

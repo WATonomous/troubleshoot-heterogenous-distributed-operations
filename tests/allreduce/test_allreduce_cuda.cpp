@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     cudaMalloc((void**)&sendbuf, num_elements * sizeof(float));
     cudaMalloc((void**)&recvbuf, num_elements * sizeof(float));
 
-    std::cout << "CUDA Rank " << rank << std::endl;
+    std::cerr << "CUDA Rank " << rank << std::endl;
 
     // Initialize data
     float val = static_cast<float>(rank);
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     float result;
     cudaMemcpy(&result, recvbuf, sizeof(float), cudaMemcpyDeviceToHost);
-    std::cout << "CUDA Rank " << rank << " received allreduce result: " << result << std::endl;
+    std::cerr << "CUDA Rank " << rank << " received allreduce result: " << result << std::endl;
 
     cudaFree(sendbuf);
     cudaFree(recvbuf);

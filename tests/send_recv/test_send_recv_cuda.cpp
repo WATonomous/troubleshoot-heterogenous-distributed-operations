@@ -37,23 +37,23 @@ int main(int argc, char** argv) {
 
         // Send the buffer from rank 0 to rank 1
         MPI_Send(device_buffer, BUFFER_SIZE, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
-        std::cout << "Rank 0 sent data to Rank 1." << std::endl;
+        std::cerr << "Rank 0 sent data to Rank 1." << std::endl;
     } 
     else if (rank == 1) {
         // Receive the buffer from rank 0
         MPI_Recv(device_buffer, BUFFER_SIZE, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        std::cout << "Rank 1 received data from Rank 0." << std::endl;
+        std::cerr << "Rank 1 received data from Rank 0." << std::endl;
 
         // Copy the data back to the host for verification
         float host_buffer[BUFFER_SIZE];
         cudaMemcpy(host_buffer, device_buffer, BUFFER_SIZE * sizeof(float), cudaMemcpyDeviceToHost);
 
         // Print the received data for verification
-        std::cout << "Received data: ";
+        std::cerr << "Received data: ";
         for (int i = 0; i < 10; i++) { // Print the first 10 elements for brevity
-            std::cout << host_buffer[i] << " ";
+            std::cerr << host_buffer[i] << " ";
         }
-        std::cout << "..." << std::endl;
+        std::cerr << "..." << std::endl;
     }
 
     // Free device memory

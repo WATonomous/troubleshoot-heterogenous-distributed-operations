@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     hipMalloc((void**)&sendbuf, num_elements * sizeof(float));
     hipMalloc((void**)&recvbuf, num_elements * sizeof(float));
 
-    std::cout << "ROCm Rank " << rank << std::endl;
+    std::cerr << "ROCm Rank " << rank << std::endl;
 
     // Initialize data
     float val = static_cast<float>(rank);
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     float result;
     hipMemcpy(&result, recvbuf, sizeof(float), hipMemcpyDeviceToHost);
-    std::cout << "ROCm Rank " << rank << " received allreduce result: " << result << std::endl;
+    std::cerr << "ROCm Rank " << rank << " received allreduce result: " << result << std::endl;
 
     hipFree(sendbuf);
     hipFree(recvbuf);
