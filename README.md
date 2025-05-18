@@ -80,37 +80,21 @@ echo $?
 Compile the test:
 
 ```sh
-docker compose exec rocm1 bash
-
-# in the container
-cp -r tests/bidirectional_send_recv /tmp/
-pushd /tmp/bidirectional_send_recv
-hipcc test_bidirectional_send_recv_rocm.cpp -lmpi
-echo $?
-popd
-```
-
-```sh
-docker compose exec cuda1 bash
-
-# in the container
-cp -r tests/bidirectional_send_recv /tmp/
-pushd /tmp/bidirectional_send_recv
-nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
-echo $?
-popd
+docker compose exec rocm1 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r tests/bidirectional_send_recv /tmp/ && cd /tmp/bidirectional_send_recv && hipcc test_bidirectional_send_recv_rocm.cpp -lmpi && echo $?"
+docker compose exec cuda1 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r tests/bidirectional_send_recv /tmp/ && cd /tmp/bidirectional_send_recv && nvcc test_bidirectional_send_recv_cuda.cpp -lmpi && echo $?"
 ```
 
 Run the test (in one of the containers):
 
-```sh
-docker compose exec rocm1 bash
+> [!NOTE]
+> The bidirectional send/recv is only programmed to run on cuda for rank0 and rocm for rank1.
 
-mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
+```sh
+docker compose exec cuda1 bash
+
+mpirun --allow-run-as-root -np 2 -H cuda1,rocm1 \
 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
--mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
--x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
 /tmp/bidirectional_send_recv/a.out
 
 # make sure the command exited successfully. Should print "0"
@@ -184,23 +168,8 @@ docker compose exec cuda2 ssh root@cuda1 hostname
 Compile the test:
 
 ```sh
-docker compose exec cuda1 bash
-# in the container
-cp -r tests/send_recv /tmp/
-pushd /tmp/send_recv
-nvcc test_send_recv_cuda.cpp -lmpi
-echo $?
-popd
-```
-
-```sh
-docker compose exec cuda2 bash
-# in the container
-cp -r tests/send_recv /tmp/
-pushd /tmp/send_recv
-nvcc test_send_recv_cuda.cpp -lmpi
-echo $?
-popd
+docker compose exec cuda1 bash -c "rm -rf /tmp/send_recv && cp -r tests/send_recv /tmp/ && cd /tmp/send_recv && nvcc test_send_recv_cuda.cpp -lmpi && echo $?"
+docker compose exec cuda2 bash -c "rm -rf /tmp/send_recv && cp -r tests/send_recv /tmp/ && cd /tmp/send_recv && nvcc test_send_recv_cuda.cpp -lmpi && echo $?"
 ```
 
 Run the test (in one of the containers):
@@ -224,21 +193,8 @@ echo $?
 Compile the test:
 
 ```sh
-docker compose exec cuda1 bash
-# in the container
-cp -r tests/bidirectional_send_recv /tmp/
-pushd /tmp/bidirectional_send_recv
-nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
-echo $?
-popd
-
-docker compose exec cuda2 bash
-# in the container
-cp -r tests/bidirectional_send_recv /tmp/
-pushd /tmp/bidirectional_send_recv
-nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
-echo $?
-popd
+docker compose exec cuda1 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r tests/bidirectional_send_recv /tmp/ && cd /tmp/bidirectional_send_recv && nvcc test_bidirectional_send_recv_cuda.cpp -lmpi && echo $?"
+docker compose exec cuda2 bash -c "rm -rf /tmp/bidirectional_send_recv && cp -r tests/bidirectional_send_recv /tmp/ && cd /tmp/bidirectional_send_recv && nvcc test_bidirectional_send_recv_cuda.cpp -lmpi && echo $?"
 ```
 
 Run the test (in one of the containers):
@@ -262,21 +218,8 @@ echo $?
 Compile the test:
 
 ```sh
-docker compose exec cuda1 bash
-# in the container
-cp -r tests/allreduce /tmp/
-pushd /tmp/allreduce
-nvcc test_allreduce_cuda.cpp -lmpi
-echo $?
-popd
-
-docker compose exec cuda2 bash
-# in the container
-cp -r tests/allreduce /tmp/
-pushd /tmp/allreduce
-nvcc test_allreduce_cuda.cpp -lmpi
-echo $?
-popd
+docker compose exec cuda1 bash -c "rm -rf /tmp/allreduce && cp -r tests/allreduce /tmp/ && cd /tmp/allreduce && nvcc test_allreduce_cuda.cpp -lmpi && echo $?"
+docker compose exec cuda2 bash -c "rm -rf /tmp/allreduce && cp -r tests/allreduce /tmp/ && cd /tmp/allreduce && nvcc test_allreduce_cuda.cpp -lmpi && echo $?"
 ```
 
 Run the test (in one of the containers):
