@@ -179,6 +179,46 @@ docker compose exec cuda2 ssh root@cuda1 hostname
 
 ### Run tests
 
+#### `send_recv`
+
+Compile the test:
+
+```sh
+docker compose exec cuda1 bash
+# in the container
+cp -r tests/send_recv /tmp/
+pushd /tmp/send_recv
+nvcc test_send_recv_cuda.cpp -lmpi
+echo $?
+popd
+```
+
+```sh
+docker compose exec cuda2 bash
+# in the container
+cp -r tests/send_recv /tmp/
+pushd /tmp/send_recv
+nvcc test_send_recv_cuda.cpp -lmpi
+echo $?
+popd
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec cuda1 bash
+
+mpirun --allow-run-as-root -np 2 -H cuda1,cuda2 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+-mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
+-x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
+/tmp/send_recv/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
 #### `bidirectional_send_recv`
 
 Compile the test:
