@@ -1,0 +1,42 @@
+services:
+  cuda1:
+    # just for cosmetics
+    hostname: cuda1
+
+    image: ghcr.io/watonomous/troubleshoot-heterogenous-distributed-operations/cuda:sha-d211bba0c51ee0bda753ba202647c81957aae699
+    # build:
+    #   context: g4dn_cuda_build
+
+    volumes:
+      - .:/workspace:ro
+    working_dir: /workspace
+    ipc: host
+    # network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["0"]
+              capabilities: [gpu]
+
+  cuda2:
+    # just for cosmetics
+    hostname: cuda2
+
+    image: ghcr.io/watonomous/troubleshoot-heterogenous-distributed-operations/cuda:sha-d211bba0c51ee0bda753ba202647c81957aae699
+    # build:
+    #   context: g4dn_cuda_build
+
+    volumes:
+      - .:/workspace:ro
+    working_dir: /workspace
+    ipc: host
+    # network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["1"]
+              capabilities: [gpu]

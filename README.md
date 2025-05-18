@@ -44,8 +44,10 @@ docker compose exec rocm1 bash
 
 # in the container
 cp -r tests/send_recv /tmp/
-cd /tmp/send_recv
+pushd /tmp/send_recv
 hipcc test_send_recv_rocm.cpp -lmpi
+echo $?
+popd
 ```
 
 ```sh
@@ -53,8 +55,10 @@ docker compose exec cuda1 bash
 
 # in the container
 cp -r tests/send_recv /tmp/
-cd /tmp/send_recv
+pushd /tmp/send_recv
 nvcc test_send_recv_cuda.cpp -lmpi
+echo $?
+popd
 ```
 
 Run the test (in one of the containers):
@@ -80,8 +84,10 @@ docker compose exec rocm1 bash
 
 # in the container
 cp -r tests/bidirectional_send_recv /tmp/
-cd /tmp/bidirectional_send_recv
+pushd /tmp/bidirectional_send_recv
 hipcc test_bidirectional_send_recv_rocm.cpp -lmpi
+echo $?
+popd
 ```
 
 ```sh
@@ -89,8 +95,10 @@ docker compose exec cuda1 bash
 
 # in the container
 cp -r tests/bidirectional_send_recv /tmp/
-cd /tmp/bidirectional_send_recv
+pushd /tmp/bidirectional_send_recv
 nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
+echo $?
+popd
 ```
 
 Run the test (in one of the containers):
@@ -101,11 +109,152 @@ docker compose exec rocm1 bash
 mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
 -mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
 -mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+-mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
+-x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
 /tmp/bidirectional_send_recv/a.out
 
 # make sure the command exited successfully. Should print "0"
 echo $?
 ```
+
+### `allreduce`
+
+Compile the test:
+
+```sh
+docker compose exec rocm1 bash
+
+# in the container
+cp -r tests/allreduce /tmp/
+pushd /tmp/allreduce
+hipcc test_allreduce_rocm.cpp -lmpi
+echo $?
+popd
+```
+
+```sh
+docker compose exec cuda1 bash
+
+# in the container
+cp -r tests/allreduce /tmp/
+pushd /tmp/allreduce
+nvcc test_allreduce_cuda.cpp -lmpi
+echo $?
+popd
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec rocm1 bash
+
+UCX_TLS=tcp UCX_NET_DEVICES=eth0 UCX_WARN_UNUSED_ENV_VARS=n \
+UCX_ROCM_COPY_D2H_THRESH=0 UCX_ROCM_COPY_H2D_THRESH=0 UCC_EC_ROCM_REDUCE_HOST_LIMIT=0 UCC_EC_ROCM_COPY_HOST_LIMIT=0 OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 \
+mpirun --allow-run-as-root -np 2 -H rocm1,cuda1 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+-mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
+-x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
+/tmp/allreduce/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
+## CUDA-only setup
+
+To test communication between CUDA nodes. Use the `docker-compose.cuda-only.yml`:
+
+```sh
+docker compose -f docker-compose.cuda-only.yml up -d --build
+
+(docker compose exec cuda1 cat /root/.ssh/id_ed25519.pub && docker compose exec cuda2 cat /root/.ssh/id_ed25519.pub) > tmp/ssh-pub-keys.txt
+
+cat tmp/ssh-pub-keys.txt | docker compose exec --no-TTY cuda1 tee /root/.ssh/authorized_keys
+cat tmp/ssh-pub-keys.txt | docker compose exec --no-TTY cuda2 tee /root/.ssh/authorized_keys
+
+docker compose exec cuda1 ssh root@cuda2 hostname
+docker compose exec cuda2 ssh root@cuda1 hostname
+```
+
+### Run tests
+
+#### `bidirectional_send_recv`
+
+Compile the test:
+
+```sh
+docker compose exec cuda1 bash
+# in the container
+cp -r tests/bidirectional_send_recv /tmp/
+pushd /tmp/bidirectional_send_recv
+nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
+echo $?
+popd
+
+docker compose exec cuda2 bash
+# in the container
+cp -r tests/bidirectional_send_recv /tmp/
+pushd /tmp/bidirectional_send_recv
+nvcc test_bidirectional_send_recv_cuda.cpp -lmpi
+echo $?
+popd
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec cuda1 bash
+
+mpirun --allow-run-as-root -np 2 -H cuda1,cuda2 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+-mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
+-x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
+/tmp/bidirectional_send_recv/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
+#### `allreduce`
+
+Compile the test:
+
+```sh
+docker compose exec cuda1 bash
+# in the container
+cp -r tests/allreduce /tmp/
+pushd /tmp/allreduce
+nvcc test_allreduce_cuda.cpp -lmpi
+echo $?
+popd
+
+docker compose exec cuda2 bash
+# in the container
+cp -r tests/allreduce /tmp/
+pushd /tmp/allreduce
+nvcc test_allreduce_cuda.cpp -lmpi
+echo $?
+popd
+```
+
+Run the test (in one of the containers):
+
+```sh
+docker compose exec cuda1 bash
+
+mpirun --allow-run-as-root -np 2 -H cuda1,cuda2 \
+-mca pml ucx -mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+-mca pml_ucx_tls tcp -mca pml_ucx_devices eth0 \
+-x UCC_TL_UCP_TUNE=inf -x UCX_LOG_LEVEL=DEBUG \
+/tmp/allreduce/a.out
+
+# make sure the command exited successfully. Should print "0"
+echo $?
+```
+
 
 # Old README
 
