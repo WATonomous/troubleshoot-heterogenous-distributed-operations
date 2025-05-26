@@ -250,6 +250,82 @@ docker compose exec cuda1 bash -c "ucc_info -v"
 docker compose exec cuda2 bash -c "ucc_info -v"
 ```
 
+## PyTorch
+
+Install PyTorch:
+
+```sh
+docker compose exec rocm1 bash -c "python -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm6.4/"
+docker compose exec cuda1 bash -c "python -m pip install torch torchvision torchaudio"
+```
+
+Run PyTorch tests:
+
+```sh
+docker compose exec rocm1 bash
+
+mpirun --allow-run-as-root -np 2 -H cuda1,rocm1 \
+-x MASTER_ADDR=rocm1 -x MASTER_PORT=1234 \
+-mca pml ucx \
+-mca coll_ucc_enable 1 -mca coll_ucc_priority 100 \
+-mca coll_ucc_verbose 3 -mca pml_ucx_verbose 3 \
+tests/pytorch/test_bidirectional_send_recv.py
+
+# mpirun --allow-run-as-root -np 2 -H <cuda_ip>,<rocm_ip> -x MASTER_ADDR=<rocm_ip> -x MASTER_PORT=1234 -mca pml ucx -x UCX_ROCM_COPY_D2H_THRESH=0 -x UCX_ROCM_COPY_H2D_THRESH=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyD2H_limit=0 -x OMPI_MCA_mpi_accelerator_rocm_memcpyH2D_limit=0 /opt/conda/envs/py_3.12/bin/python /test_allreduce.py
+
+MASTER_ADDR=rocm1 MASTER_PORT=1234 \
+torchrun \
+  --nproc_per_node=1 \
+  --nnodes=2 \
+  --node_rank=0 \
+  --rdzv_id=123 \
+  --rdzv_backend=c10d \
+  --rdzv_endpoint=rocm1:1234 \
+  tests/pytorch/test_bidirectional_send_recv_torchrun.py
+
+MASTER_ADDR=rocm1 MASTER_PORT=1234 \
+torchrun \
+  --nproc_per_node=1 \
+  --nnodes=2 \
+  --node_rank=1 \
+  --rdzv_id=123 \
+  --rdzv_backend=c10d \
+  --rdzv_endpoint=rocm1:1234 \
+  tests/pytorch/test_bidirectional_send_recv_torchrun.py
+
+
+MASTER_ADDR=rocm1 MASTER_PORT=12345 LOCAL_RANK=0 WORLD_SIZE=2 RANK=0 python tests/pytorch/test_bidirectional_send_recv_torchrun.py
+MASTER_ADDR=rocm1 MASTER_PORT=12345 LOCAL_RANK=0 WORLD_SIZE=2 RANK=1 python tests/pytorch/test_bidirectional_send_recv_torchrun.py
+```
+
+CUDA-only:
+
+```
+MASTER_ADDR=cuda1 MASTER_PORT=12345 LOCAL_RANK=0 WORLD_SIZE=2 RANK=0 python tests/pytorch/test_bidirectional_send_recv_torchrun.py
+MASTER_ADDR=cuda1 MASTER_PORT=12345 LOCAL_RANK=0 WORLD_SIZE=2 RANK=1 python tests/pytorch/test_bidirectional_send_recv_torchrun.py
+
+MASTER_ADDR=cuda1 MASTER_PORT=1234 \
+torchrun \
+  --nproc_per_node=1 \
+  --nnodes=2 \
+  --node_rank=0 \
+  --rdzv_id=123 \
+  --rdzv_backend=c10d \
+  --rdzv_endpoint=cuda1:1234 \
+  tests/pytorch/test_bidirectional_send_recv_torchrun.py
+
+MASTER_ADDR=cuda1 MASTER_PORT=1234 \
+torchrun \
+  --nproc_per_node=1 \
+  --nnodes=2 \
+  --node_rank=1 \
+  --rdzv_id=123 \
+  --rdzv_backend=c10d \
+  --rdzv_endpoint=cuda1:1234 \
+  tests/pytorch/test_bidirectional_send_recv_torchrun.py
+```
+
+
 
 # Old README
 
