@@ -325,6 +325,29 @@ torchrun \
   tests/pytorch/test_bidirectional_send_recv_torchrun.py
 ```
 
+### Building PyTorch
+
+Building PyTorch from source is needed to enable MPI support. Instructions are available [here](https://github.com/pytorch/pytorch/tree/v2.7.0?tab=readme-ov-file#from-source).
+
+```sh
+git clone https://github.com/pytorch/pytorch --branch v2.7.0 --depth 1 --recursive
+cd pytorch
+conda install -y cmake ninja
+pip install -r requirements.txt
+```
+
+ROCm:
+
+```sh
+python tools/amd_build/build_amd.py
+```
+
+All:
+
+```sh
+export CMAKE_PREFIX_PATH="${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}"
+python setup.py develop
+```
 
 
 # Old README

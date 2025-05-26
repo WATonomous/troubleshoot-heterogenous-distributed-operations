@@ -195,6 +195,16 @@ ENV USE_ROCM=ON
 ENV USE_CUDA=OFF
 ENV USE_MKLDNN=OFF
 
+# Build PyTorch
+RUN cd /opt \
+    && git clone https://github.com/pytorch/pytorch --branch v2.7.0 --depth 1 --recursive \
+    && cd pytorch \
+    && conda install -y cmake ninja \
+    && pip install -r requirements.txt \
+    && python tools/amd_build/build_amd.py \
+    && export CMAKE_PREFIX_PATH="${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}" \
+    && python setup.py develop
+
 # Generate key for SSH server
 RUN ssh-keygen -t ecdsa -N "" -f /root/.ssh/hostkey
 # Generate client key

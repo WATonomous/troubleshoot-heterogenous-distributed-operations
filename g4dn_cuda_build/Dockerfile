@@ -130,6 +130,14 @@ ENV USE_ROCM=OFF
 ENV USE_CUDA=ON
 ENV USE_MKLDNN=OFF
 
+RUN cd /opt \
+    && git clone https://github.com/pytorch/pytorch --branch v2.7.0 --depth 1 --recursive \
+    && cd pytorch \
+    && conda install -y cmake ninja \
+    && pip install -r requirements.txt \
+    && export CMAKE_PREFIX_PATH="${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}" \
+    && python setup.py develop
+
 # Generate key for SSH server
 RUN ssh-keygen -t ed25519 -N "" -f /root/.ssh/hostkey
 # Generate client key
