@@ -131,7 +131,7 @@ ENV USE_CUDA=ON
 ENV USE_MKLDNN=OFF
 
 RUN cd /opt \
-    && git clone https://github.com/pytorch/pytorch --branch v2.7.0 --depth 1 --recursive \
+    && git clone https://github.com/pytorch/pytorch --branch v2.5.1 --depth 1 --recursive \
     && cd pytorch \
     && conda install -y cmake ninja \
     && pip install -r requirements.txt \
