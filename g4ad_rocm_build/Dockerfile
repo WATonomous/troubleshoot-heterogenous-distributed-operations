@@ -44,7 +44,7 @@ RUN rm install_vision.sh cache_vision_models.sh common_utils.sh
 ENV INSTALLED_VISION=yes
 
 # Install rocm
-ENV ROCM_VERSION=6.2.2
+ENV ROCM_VERSION=6.3.3
 COPY ./scripts/install_rocm.sh install_rocm.sh
 RUN bash ./install_rocm.sh
 RUN rm install_rocm.sh
