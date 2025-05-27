@@ -61,22 +61,6 @@ COPY ./scripts/install_rocm_clean.sh install_rocm_clean.sh
 RUN bash ./install_rocm_clean.sh
 RUN rm install_rocm_clean.sh
 
-# Build and install roc* libs:
-# rocBLAS
-COPY ./scripts/install_rocblas.sh install_rocblas.sh
-RUN bash ./install_rocblas.sh
-RUN rm install_rocblas.sh
-
-#rocSPARSE
-COPY ./scripts/install_rocsparse.sh install_rocsparse.sh
-RUN bash ./install_rocsparse.sh
-RUN rm install_rocsparse.sh
-
-# rocsSOLVER
-COPY ./scripts/install_rocsolver.sh install_rocsolver.sh
-RUN bash ./install_rocsolver.sh
-RUN rm install_rocsolver.sh
-
 # Build and install hip* libs:
 # hipblas-common
 COPY ./scripts/install_hipblas-common.sh install_hipblas-common.sh
@@ -102,6 +86,22 @@ RUN rm install_hipsparse.sh
 COPY ./scripts/install_hipsolver.sh install_hipsolver.sh
 RUN bash ./install_hipsolver.sh
 RUN rm install_hipsolver.sh
+
+# Build and install roc* libs:
+# rocBLAS
+COPY ./scripts/install_rocblas.sh install_rocblas.sh
+RUN bash ./install_rocblas.sh
+RUN rm install_rocblas.sh
+
+#rocSPARSE
+COPY ./scripts/install_rocsparse.sh install_rocsparse.sh
+RUN bash ./install_rocsparse.sh
+RUN rm install_rocsparse.sh
+
+# rocsSOLVER
+COPY ./scripts/install_rocsolver.sh install_rocsolver.sh
+RUN bash ./install_rocsolver.sh
+RUN rm install_rocsolver.sh
 
 # Build and install MAGMA
 COPY ./scripts/install_rocm_magma.sh install_rocm_magma.sh
