@@ -202,6 +202,8 @@ RUN cd /opt \
     && conda install -y cmake ninja \
     && pip install -r requirements.txt \
     && python tools/amd_build/build_amd.py \
+# Separate step for debugging
+RUN cd /opt/pytorch \
     && export CMAKE_PREFIX_PATH="${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}" \
     && python setup.py develop
 
