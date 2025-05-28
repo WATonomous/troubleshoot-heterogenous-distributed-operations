@@ -44,7 +44,7 @@ RUN rm install_vision.sh cache_vision_models.sh common_utils.sh
 ENV INSTALLED_VISION=yes
 
 # Install rocm
-ENV ROCM_VERSION=6.3.3
+ENV ROCM_VERSION=6.2.2
 COPY ./scripts/install_rocm.sh install_rocm.sh
 RUN bash ./install_rocm.sh
 RUN rm install_rocm.sh
@@ -60,6 +60,22 @@ ENV PATH /opt/rocm/llvm/bin:$PATH
 COPY ./scripts/install_rocm_clean.sh install_rocm_clean.sh
 RUN bash ./install_rocm_clean.sh
 RUN rm install_rocm_clean.sh
+
+# Build and install roc* libs:
+# rocBLAS
+COPY ./scripts/install_rocblas.sh install_rocblas.sh
+RUN bash ./install_rocblas.sh
+RUN rm install_rocblas.sh
+
+#rocSPARSE
+COPY ./scripts/install_rocsparse.sh install_rocsparse.sh
+RUN bash ./install_rocsparse.sh
+RUN rm install_rocsparse.sh
+
+# rocsSOLVER
+COPY ./scripts/install_rocsolver.sh install_rocsolver.sh
+RUN bash ./install_rocsolver.sh
+RUN rm install_rocsolver.sh
 
 # Build and install hip* libs:
 # hipblas-common
@@ -86,22 +102,6 @@ RUN rm install_hipsparse.sh
 COPY ./scripts/install_hipsolver.sh install_hipsolver.sh
 RUN bash ./install_hipsolver.sh
 RUN rm install_hipsolver.sh
-
-# Build and install roc* libs:
-# rocBLAS
-COPY ./scripts/install_rocblas.sh install_rocblas.sh
-RUN bash ./install_rocblas.sh
-RUN rm install_rocblas.sh
-
-#rocSPARSE
-COPY ./scripts/install_rocsparse.sh install_rocsparse.sh
-RUN bash ./install_rocsparse.sh
-RUN rm install_rocsparse.sh
-
-# rocsSOLVER
-COPY ./scripts/install_rocsolver.sh install_rocsolver.sh
-RUN bash ./install_rocsolver.sh
-RUN rm install_rocsolver.sh
 
 # Build and install MAGMA
 COPY ./scripts/install_rocm_magma.sh install_rocm_magma.sh
@@ -197,11 +197,13 @@ ENV USE_MKLDNN=OFF
 
 # Build PyTorch
 RUN cd /opt \
-    && git clone https://github.com/pytorch/pytorch --branch v2.7.0 --depth 1 --recursive \
+    && git clone https://github.com/pytorch/pytorch --branch v2.5.1 --depth 1 --recursive \
     && cd pytorch \
     && conda install -y cmake ninja \
     && pip install -r requirements.txt \
     && python tools/amd_build/build_amd.py \
+# Separate step for debugging
+RUN cd /opt/pytorch \
     && export CMAKE_PREFIX_PATH="${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}" \
     && python setup.py develop
 
